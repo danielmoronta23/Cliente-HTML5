@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+mainClassName = 'clienteHTML5.Main'
+group 'clienteHTML5'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "io.javalin:javalin:3.8.0"
+    compile "org.slf4j:slf4j-simple:1.7.28"
+
+    //Thymeleaf
+    compile "org.thymeleaf:thymeleaf:3.0.9.RELEASE"
+
+    //agregando dependencia de H2, represanta el Drive de la conexion.
+    compile 'com.h2database:h2:1.4.200'
+
+    //Agregando liberia para encriptar.
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
+
+    //ORM - Hibernate.
+    compile 'org.hibernate:hibernate-core:5.4.17.Final'
+    compile 'org.hibernate:hibernate-entitymanager:5.4.17.Final'
+}
+
+//Agregando UTF 8 para las plantillas.
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+shadowJar{
+    baseName = 'app'
+    classifier = ''
+    archiveVersion = ''
+}
