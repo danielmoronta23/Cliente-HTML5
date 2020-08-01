@@ -26,7 +26,7 @@ public class ControladorPlantilla {
             app.get("/", ctx ->{
 
                 //VERIFICAR SI EXISTE COOKIE PARA ENTRAR A LA PAGINA PRINCIPAL O LLEVAR AL LOGIN
-                if (ctx.cookie("sesion") != null){
+                if (ctx.sessionAttribute("usuario") != null){
 
                     //FUNCION PARA IDENTIFICAR USUARIO MEDIANTE COOKIE
 
@@ -38,6 +38,8 @@ public class ControladorPlantilla {
                     ctx.redirect("/login");
                 }
             });
+
+
 
             app.get("/geo",ctx -> {
 
@@ -59,6 +61,8 @@ public class ControladorPlantilla {
                 ctx.render("publico/dist/login.html");
             });
 
+
+
             app.post("/ingresar", ctx -> {
                 String user = ctx.formParam("usuario");
                 String pass = ctx.formParam("password");
@@ -79,7 +83,6 @@ public class ControladorPlantilla {
                         // CREANDO COOKIE DE 604800 seg =  1 semana
                         ctx.cookie("sesion", myEncryptedNumber.toString(), 604800);
                     }
-
                     //PAGINA PRINCIPAL
                     ctx.redirect("/");
                 }
