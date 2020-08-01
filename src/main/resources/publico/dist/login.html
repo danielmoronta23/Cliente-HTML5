@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Login-P#4" />
+        <meta name="author" content="Ando Roman" />
+        <title>Login</title>
+        <link rel="icon" type="image/png" href="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/54c27caf-eb0b-4afa-bd6d-664b4e5916c0/dcqa1er-633704c3-a7dd-455c-997c-933b48ea5260.png/v1/fill/w_1024,h_862,strp/jack_frost_icon_by_namcokid47_dcqa1er-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3siaGVpZ2h0IjoiPD04NjIiLCJwYXRoIjoiXC9mXC81NGMyN2NhZi1lYjBiLTRhZmEtYmQ2ZC02NjRiNGU1OTE2YzBcL2RjcWExZXItNjMzNzA0YzMtYTdkZC00NTVjLTk5N2MtOTMzYjQ4ZWE1MjYwLnBuZyIsIndpZHRoIjoiPD0xMDI0In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.dkyCYXeTNwwkQvYEnubOOUWrJSWlHnmMfXqR4gnR0OQ">
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-secondary">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Iniciar Sesión</h3></div>
+                                    <div class="card-body">
+                                        <form method="post" action="/ingresar">
+                                            <div class="form-group">
+                                                <input class="form-control py-4" id="inputUsuario" type="text" name="usuario" placeholder="Usuario" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control py-4" id="inputPassword" type="password" name="password" placeholder="Contraseña" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" name="checkbox" />
+                                                    <label class="custom-control-label" for="rememberPasswordCheck">Recuerdame</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                               <!-- <a class="small" href="password.html">Forgot Password?</a> -->
+                                                <button class="btn btn-primary" type="submit">Ingresar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <!--<div class="small"><a href="register.html">Need an account? Sign up!</a></div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <div id="layoutAuthentication_footer">
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Ando Roman 2020</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
