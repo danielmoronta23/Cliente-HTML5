@@ -44,6 +44,16 @@ public class ControladorPlantilla {
 
             });
 
+            app.post("/registrar", ctx -> {
+                String nombre = ctx.formParam("nombre");
+                String usuario = ctx.formParam("usuario");
+                String contraseña = ctx.formParam("contra");
+                String rol = ctx.formParam("rol");
+
+
+                ctx.redirect("/");
+            });
+
             app.get("/login", ctx -> {
 
                 ctx.render("publico/dist/login.html");
