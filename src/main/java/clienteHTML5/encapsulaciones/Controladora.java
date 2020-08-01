@@ -1,10 +1,14 @@
 package clienteHTML5.encapsulaciones;
 
+import clienteHTML5.servicios.ServicioFormulario;
 import clienteHTML5.servicios.ServicioUsuario;
+
+import java.util.List;
 
 public class Controladora {
     private static Controladora controladora = null;
     private final ServicioUsuario servicioUsuario = new ServicioUsuario();
+    private final ServicioFormulario servicioFormulario = new ServicioFormulario();
 
     public Controladora() {
 
@@ -19,7 +23,8 @@ public class Controladora {
     public static Controladora getControladora() {
         return controladora;
     }
-    //Implementados metodos necesarios para Crear usuarios y autentificar.
+
+    //------------------------------Implementados metodos para Crear usuarios y autentificar.------------------------------
     public boolean agregarUsuario(Usuario usuario){
         return servicioUsuario.crear(usuario);
     }
@@ -36,6 +41,27 @@ public class Controladora {
         }
         return auxUsuario;
     }
+    public List<Usuario> getServicioUsuario() {
+        return servicioUsuario.explorarTodo();
+    }
+    // ------------------------------CRUD FORMULARIO ------------------------------
+    public boolean agregarRegistro(Formulario formulario){
+      return servicioFormulario.crear(formulario);
+    }
+    public boolean borroarRegistro(String id){
+        return servicioFormulario.eliminar(servicioFormulario.buscar(id));
+    }
+    public boolean actualizarRegistro(Formulario formularioActualizado){
+        Formulario formulario = servicioFormulario.buscar(formularioActualizado.getId());
+        if(formulario!=null){
+             return  servicioFormulario.editar(formularioActualizado);
+        }
+        return false;
+    }
+    public List<Formulario> getServicioFormulario() {
+        return servicioFormulario.explorarTodo();
+    }
+    //------------------------------Creando Datos por defecto------------------------------
     public void crearDatosPorDefecto(){
         //Usuario por defecto
         if(servicioUsuario.buscar("admin")==null){
@@ -43,5 +69,4 @@ public class Controladora {
             servicioUsuario.crear(new Usuario("admin", "admin", "1234"));
         }
     }
-
 }
