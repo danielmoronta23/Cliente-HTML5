@@ -120,18 +120,44 @@
                             <div class="card-body">
                                 <div id="map" class="map"></div>
                                 <script type="text/javascript">
-                                    var map = new ol.Map({
-                                        target: 'map',
-                                        layers: [
-                                            new ol.layer.Tile({
-                                                source: new ol.source.OSM()
+
+
+                                    var options = {
+                                        enableHighAccuracy: true,
+                                        timeout: 5000,
+                                        maximumAge: 0
+                                    };
+
+                                    function success(pos) {
+                                        var crd = pos.coords;
+
+                                        console.log('Your current position is:');
+                                        console.log('Latitude : ' + crd.latitude);
+                                        console.log('Longitude: ' + crd.longitude);
+                                        console.log('More or less ' + crd.accuracy + ' meters.');
+
+                                        var map = new ol.Map({
+                                            target: 'map',
+                                            layers: [
+                                                new ol.layer.Tile({
+                                                    source: new ol.source.OSM()
+                                                })
+                                            ],
+                                            view: new ol.View({
+                                                center: ol.proj.fromLonLat([crd.latitude, crd.longitude]),
+                                                zoom: 4
                                             })
-                                        ],
-                                        view: new ol.View({
-                                            center: ol.proj.fromLonLat([37.41, 8.82]),
-                                            zoom: 4
-                                        })
-                                    });
+                                        });
+
+                                    };
+
+                                    function error(err) {
+                                        console.warn('ERROR(' + err.code + '): ' + err.message);
+                                    };
+
+                                    navigator.geolocation.getCurrentPosition(success, error, options);
+
+
                                 </script>
                             </div>
                             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
