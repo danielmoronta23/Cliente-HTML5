@@ -23,6 +23,7 @@ public class ControladorPlantilla {
     public void rutas(Javalin app) {
         app.routes(() -> {
 
+            //VISTA PRINCIPAL
             app.get("/", ctx ->{
 
                 //VERIFICAR SI EXISTE COOKIE PARA ENTRAR A LA PAGINA PRINCIPAL O LLEVAR AL LOGIN
@@ -41,11 +42,12 @@ public class ControladorPlantilla {
 
 
 
-            app.get("/geo",ctx -> {
-
+            //ENVIAR DATOS AL SERVIDOR
+            app.post("/EnviarServidor", ctx -> {
 
             });
 
+            //REGISTRAR USUARIO
             app.post("/registrar", ctx -> {
                 String nombre = ctx.formParam("nombre");
                 String usuario = ctx.formParam("usuario");
@@ -56,13 +58,22 @@ public class ControladorPlantilla {
                 ctx.redirect("/");
             });
 
+            //VISTA DEL LOGIN
             app.get("/login", ctx -> {
 
                 ctx.render("publico/dist/login.html");
             });
 
+            //CERRAR SESION
+            app.get("/loginOUT", ctx -> {
+               ctx.clearCookieStore();
+               ctx.sessionAttribute("usuario", null);
+
+               ctx.redirect("/login");
+            });
 
 
+            //AUTENTICACIÓN EN EL LOGIN
             app.post("/ingresar", ctx -> {
                 String user = ctx.formParam("usuario");
                 String pass = ctx.formParam("password");
@@ -97,6 +108,7 @@ public class ControladorPlantilla {
 
         });
     }
+
 
     //FUNCION PARA AUTENTICAR EL LOGIN DE UN USUARIO
     private boolean autenticacion(String user, String pass) {
