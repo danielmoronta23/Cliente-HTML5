@@ -21,46 +21,86 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Crear nueva cuenta</h3></div>
                                     <div class="card-body">
-                                        <form>
-                                            <div class="form-row">
-                                                <div class="col-md-6">
+                                        <form method="post" action="/registrar" onsubmit="return ValidateForm();">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input class="form-control py-4" id="inputName" type="text" placeholder="Nombre" name="nombre" required/>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Llene este campo
+                                                </div>
+                                                <div class="form-group">
+                                                    <input class="form-control py-4" id="inputUser" type="text" placeholder="Usuario" name="usuario" required/>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Eliga un Usuario
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <input class="form-control py-4" id="inputFirstName" type="text" placeholder="Nombre" />
+                                                        <input class="form-control py-4" id="inputPassword" type="password" placeholder="Contraseña" name="contra" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="Confirmar Contraseña" required/>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <input class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Usuario" />
+                                            <br>
+                                            <div class="col-md-12">
+                                                <fieldset class="input-group">
+                                                    <legend>¿Rol de Trabajo?</legend>
+                                                    <br>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="Rol" id="inlineRadio1" value="Administrador">
+                                                        <label class="form-check-label" for="inlineRadio1">Administrador</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="Rol" id="inlineRadio2" value="Empleado">
+                                                        <label class="form-check-label" for="inlineRadio2">Empleado</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="Rol" id="inlineRadio3" value="Voluntario">
+                                                        <label class="form-check-label" for="inlineRadio3">Voluntario</label>
+                                                    </div>
+                                                </fieldset>
                                             </div>
-                                            <div class="form-row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input class="form-control py-4" id="inputPassword" type="password" placeholder="Contraseña" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="Confirmar Contraseña" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                                        <label class="form-check-label" for="inlineRadio1">1</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                        <label class="form-check-label" for="inlineRadio2">2</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
-                                                        <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
-                                                    </div>
-                                                </div>
 
-                                            </div>
-                                            <div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block" href="login.html">Crear Cuenta</a></div>
+                                            <br>
+                                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" onclick="return ValidatePass()">Crear Cuenta</button></div>
                                         </form>
+
+                                        <script type="text/javascript">
+                                            function ValidatePass() {
+                                                var password = document.getElementById("inputPassword").value;
+                                                var confirmPassword = document.getElementById("inputConfirmPassword").value;
+                                                if (password != confirmPassword) {
+                                                    alert("Contraseñas Distintas!")
+                                                    return false;
+                                                }
+                                                return true;
+                                            }
+                                        </script>
+
+                                        <script type="text/javascript">
+                                            function ValidateForm()
+                                            {
+                                                var radioButtons = document.getElementsByName("rol");
+                                                for(var i = 0; i < radioButtons.length; i++)
+                                                {
+                                                    if(radioButtons[i].checked == true)
+                                                    {
+                                                        if(confirm("Haz seleccionado " + radioButtons[i].value + " como rol. ¿Estas Seguro?"))
+                                                            return true;
+                                                        else
+                                                            return false;
+                                                    }
+                                                }
+                                            }
+                                        </script>
+
                                     </div>
                                     <div class="card-footer text-center">
                                         <div class="small"><a href="login.html">Tienes Una Cuenta?</a></div>
