@@ -1,5 +1,8 @@
 //Referencia: https://github.com/vacax/javalin-demo
 
+console.log("Entrando a Scrip para IndexdDB")
+//Referencia: https://github.com/vacax/javalin-demo
+
 //Dependiendo el navegador se busca la referencia del objeto.
 const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB
 
@@ -31,80 +34,89 @@ dataBase.onerror = function (e) {
 
 //--------------------------------GRUD Formulario---------------------------
 function agregarFormulario() {
-    const dbActiva = dataBase.result; //Nos retorna una referencia al IDBDatabase.
+    //Agregar lo de Nivel Escolar...
+    var name="";
+    var sector="";
+    name=$("#nombreF").val();
+    sector=$("#sector").val();
+    //validando campos..
+    if(name!="" && sector!="") {
 
-    //Para realizar una operación de agreagr, actualización o borrar.
-    // Es necesario abrir una transacción e indicar un modo: readonly, readwrite y versionchange
-    const transaccion = dbActiva.transaction(["formulario"], "readwrite");
+        var dbActiva = dataBase.result; //Nos retorna una referencia al IDBDatabase.
 
-    //Manejando los errores.
-    transaccion.onerror = function (e) {
-        alert(request.error.name + '\n\n' + request.error.message);
-    };
+        // Para realizar una operación de agreagr, actualización o borrar.
+        // Es necesario abrir una transacción e indicar un modo: readonly, readwrite y versionchange
+        var transaccion = dbActiva.transaction(["formulario"], "readwrite");
 
-    transaccion.oncomplete = function (e) {
-        document.querySelector("#id").value = '';
-        alert('Objeto agregado correctamente!');
-    };
+        //Manejando los errores.
+        transaccion.onerror = function (e) {
+            alert(request.error.name + '\n\n' + request.error.message);
+        };
 
-    //Abriendo la colección de datos que estaremos usando.
-    const formulario = transaccion.objectStore("formulario");
+        transaccion.oncomplete = function (e) {
+            document.querySelector("#nombreF").value = '';
+            alert('Objeto agregado correctamente!');
+        };
 
-    //Para agregar se puede usar add o put; el add requiere que no exista el objeto.
-    const request = formulario.put({
-        //id: document.querySelector("#id").value,
-        nombre: document.querySelector("#nombreF").value,
-        sector: document.querySelector("#sector").value,
-        nivelEscolar: document.querySelector("#nivelEscolar").value
+        //Abriendo la colección de datos que estaremos usando.
+        var formulario = transaccion.objectStore("formulario");
 
-    });
+        //Para agregar se puede usar add o put; el add requiere que no exista el objeto.
+        var request = formulario.put({
+            //id: document.querySelector("#id").value,
+            nombre: document.querySelector("#nombreF").value,
+            sector: document.querySelector("#sector").value,
+            nivelEscolar: document.querySelector("#nivelEscolar").value
 
-    request.onerror = function (e) {
-        const mensaje = "Error: "+e.target.errorCode;
-        console.error(mensaje);
-        alert(mensaje)
-    };
+        });
 
-    request.onsuccess = function (e) {
-        console.log("Datos Procesado con exito");
-        document.querySelector("#id").value = "";
-        document.querySelector("#nombre").value = "";
-        document.querySelector("#sector").value = "";
-        document.querySelector("#nivelEscolar").value = "";
-    };
+        request.onerror = function (e) {
+            var mensaje = "Error: " + e.target.errorCode;
+            console.error(mensaje);
+            alert(mensaje)
+        };
 
+        request.onsuccess = function (e) {
+            console.log("Datos Procesado con exito");
+            //document.querySelector("#id").value = "";
+            document.querySelector("#nombreF").value = "";
+            document.querySelector("#sector").value = "";
+            document.querySelector("#nivelEscolar").value = "";
+        };
 
+       listarDatos();
+    }
+    else {
+        console.log("Debe Completar todos los campos requeridos...")
+    }
 }
+
 function borrarFormulario() {
 
-    const id = prompt("Indique el ID del formulario: ");
+    const id = $("#idBorrar").val();
     console.log("ID digitadO: "+id);
 
     const data = dataBase.result.transaction(["formulario"], "readwrite");
     const formulario = data.objectStore("formulario");
 
-    formulario.delete(id).onsuccess = function (e) {
+    formulario.delete(parseInt(id)).onsuccess = function (e) {
         console.log("Formulario eliminado...");
     };
+
 }
 function editarFormulario() {
-    /**
-     * Aqui se deben pasar dirrectamente los valores que correspondan a los campos que se va editar. Lo hice con fines de prueba (MODIFICAR):
-     *  id, nombre, sector, nivelEscolar
-     *  (Falta ubicacion)
-     **/
 
     //recuperando la id.
-    var id = prompt("Indique el ID del formulario:");
+    var id = $("#idEdit").val();
     console.log("ID digitadO:  "+id);
 
-    var nombre = prompt("Indique el nombre");
+    var nombre = $("#nombreEdit").val();
     console.log("el nombre digitada: "+nombre);
 
-    var sector = prompt("Indique el nombre");
+    var sector = $("#sectorEdit").val();
     console.log("el nombre digitada: "+sector);
 
-    var nivelEscolar = prompt("Indique el nombre");
+    var nivelEscolar = $("#nivelEscolarEdit").val();
     console.log("el nombre digitada: "+nivelEscolar);
 
     //abriendo la transacción en modo escritura.
@@ -112,7 +124,7 @@ function editarFormulario() {
     var formulario = data.objectStore("formulario");
 
     //buscando formulario por la referencia al key.
-    formulario.get(""+id).onsuccess = function(e) {
+    formulario.get(parseInt(id)).onsuccess = function(e) {
 
         var resultado = e.target.result;
         console.log("los datos: "+JSON.stringify(resultado));
@@ -129,24 +141,20 @@ function editarFormulario() {
             solicitudUpdate.onsuccess = function (e) {
                 console.log("Datos Actualizados....");
             }
-
             solicitudUpdate.onerror = function (e) {
                 console.error("Error Datos Actualizados....");
             }
-
         }else{
             console.log("Formulario no encontrado...");
         }
     };
-
 }
-
 function listarDatos() {
     //por defecto si no lo indico el tipo de transacción será readonly
-    const data = dataBase.result.transaction(["formulario"]);
-    const formulario = data.objectStore("formulario");
+    var data = dataBase.result.transaction(["formulario"]);
+    var formulario = data.objectStore("formulario");
     var contador = 0;
-    const formulario_recuperados=[];
+    var formulario_recuperados=[];
 
     //Abriendo el cursor.
     formulario.openCursor().onsuccess=function(e) {
@@ -171,26 +179,22 @@ function listarDatos() {
 
 function imprimirTabla(lista_formulario) {
     // creando la tabla...
-    /**
-     * Se debe MODIFICAR esta parte, de modo que se inserte en la tabla que se ya esta creada en la vista
-     * y no crear una nueva tabla como se esta haciendo en este caso.
-     */
-    var tabla = document.createElement("table");
-    var filaTabla = tabla.insertRow();
-    filaTabla.insertCell().textContent = "id";
-    filaTabla.insertCell().textContent = "nombre";
-    filaTabla.insertCell().textContent = "sector";
-    filaTabla.insertCell().textContent = "nivelEscolar";
-
+    var fila =""
     for (var key in lista_formulario) {
-        filaTabla = tabla.insertRow();
-        filaTabla.insertCell().textContent = ""+lista_formulario[key].id;
-        filaTabla.insertCell().textContent = ""+lista_formulario[key].nombre;
-        filaTabla.insertCell().textContent = ""+lista_formulario[key].sector;
-        filaTabla.insertCell().textContent = ""+lista_formulario[key].nivelEscolar;
+        //console.log("indice: ", key)
+        fila +="<tr>"
+        fila+= "<td>"+lista_formulario[key].id+"</td>"
+        fila+= "<td>"+lista_formulario[key].nombre+"</td>"
+        fila+=  "<td>"+lista_formulario[key].sector+"</td>"
+        fila+=  "<td>"+lista_formulario[key].nivelEscolar+"</td>"
+        fila+= "<td>"
+        fila+=  "<a id='editar' href='#editFromModal' class='edit' data-toggle='modal'>"+ "<i class='material-icons' data-toggle='tooltip' title='Edit'>"+"&#xE254;"+"</i>" +"</a>"
+        fila+= 	"<a id='borrar' href='#deleteFroModal' class='delete' data-toggle='modal'>"+"<i class='material-icons' data-toggle='tooltip' title='Delete'>"+"&#xE872;"+"</i>"+"</a>"
+        fila+= "</td>"
+        fila+=  "</tr>"
+
     }
-    document.getElementById("listaFormulario").innerHTML="";
-    document.getElementById("listaFormulario").appendChild(tabla);
+    document.getElementById("listaFormulario").innerHTML=fila;
+
+
 }
-
-
