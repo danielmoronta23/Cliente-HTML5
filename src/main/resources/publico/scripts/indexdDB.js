@@ -53,7 +53,7 @@ function agregarFormulario() {
     //Para agregar se puede usar add o put; el add requiere que no exista el objeto.
     const request = formulario.put({
         //id: document.querySelector("#id").value,
-        nombre: document.querySelector("#nombre").value,
+        nombre: document.querySelector("#nombreF").value,
         sector: document.querySelector("#sector").value,
         nivelEscolar: document.querySelector("#nivelEscolar").value
 

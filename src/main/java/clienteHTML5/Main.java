@@ -13,6 +13,7 @@ public class Main {
         Javalin app = Javalin.create(config ->{
             config.addStaticFiles("/publico"); //Desde la carpeta de resources
             config.addStaticFiles("/publico/dist");
+            config.addStaticFiles("/publico/scripts");
             config.enableCorsForAllOrigins();
         }).start(7000);
         try {

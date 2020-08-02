@@ -110,31 +110,30 @@
                                         <i class="fas fa-chart-bar mr-1"></i>
                                         Realizar Formulario
                                     </div>
-                                    <form method="post" action="/formulario">
-                                        <div class="card-body">
-
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" id="nombreForm" name="nombreF" placeholder="Nombre" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" id="Sector" name="sector" placeholder="Sector" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" required>
-                                                        <option selected> Nivel Academico</option>
-                                                        <option value="Basico">Basico</option>
-                                                        <option value="Medio">Medio</option>
-                                                        <option value="Grado">Grado</option>
-                                                        <option value="Maestria">Maestria</option>
-                                                        <option value="Doctorado">Doctorado</option>
-                                                    </select>
-                                                </div>
-                                                <input type="hidden" name="usuario" th:value="${user}">
+                                    <!--<form method="post" id="nuevoForm"> -->
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="nombreF" name="nombreF" placeholder="Nombre" required>
                                         </div>
-                                        <div class="card-footer">
-                                            <button class="btn-success btn ml-mr">Guardar Formulario</button>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="sector" name="sector" placeholder="Sector" required>
                                         </div>
-                                    </form>
+                                        <div class="form-group">
+                                            <select class="custom-select mr-sm-2" id="nivelEscolar" name="nivelEscolar" required>
+                                                <option selected> Nivel Academico</option>
+                                                <option value="Basico">Basico</option>
+                                                <option value="Medio">Medio</option>
+                                                <option value="Grado">Grado</option>
+                                                <option value="Maestria">Maestria</option>
+                                                <option value="Doctorado">Doctorado</option>
+                                            </select>
+                                        </div>
+                                        <input type="hidden" name="usuario" th:value="${user}">
+                                    </div>
+                                    <div class="card-footer">
+                                        <button class="btn-success btn ml-mr" onclick="agregarFormulario()">Guardar Formulario</button>
+                                    </div>
+                                   <!-- </form> -->
                                 </div>
                             </div>
                         </div>
@@ -175,8 +174,8 @@
                                                 <td class="align-middle"; th:text="${Formularios.ubicacion.longitud} + / + ${Formularios.ubicacion.latitud}"></td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-success">Editar</button>
-                                                        <button type="button" class="btn btn-danger">Eliminar</button>
+                                                        <button type="button" id="Editar" class="btn btn-success">Editar</button>
+                                                        <button type="button" id="Eliminar" class="btn btn-danger">Eliminar</button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -188,7 +187,7 @@
                                                 <td>2011/01313</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-success">Editar</button>
+                                                        <button type="button"  class="btn btn-success">Editar</button>
                                                         <button type="button" class="btn btn-danger">Eliminar</button>
                                                     </div>
                                                 </td>
@@ -214,6 +213,19 @@
                 </footer>
             </div>
         </div>
+
+        <!--JAVASCRIPT PARA SABER CUAL FORMULARIO SE ESCOGIÓ DE LA TABLA-->
+        <script>
+            $(document).on('click','#editar',function () {
+                var Row = $(this).closest('tr');
+                var nombre = Row.find('td:eq(1)').text();
+                var Sector = Row.find('td:eq(2)').text();
+                var nivel = Row.find('td:eq(3)').text();
+
+            })
+        </script>
+        <script src="scripts/indexdDB.js"></script>
+
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
