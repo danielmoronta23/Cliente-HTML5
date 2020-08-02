@@ -19,14 +19,17 @@ public class Formulario implements Serializable {
     private String NivelEscolar;
     @OneToOne
     private Usuario usuario;
+    @Embedded
+    private Ubicacion ubicacion;
 
     public Formulario() {
     }
-    public Formulario(String nombre, String sector, String nivelEscolar, Usuario usuario) {
+    public Formulario(String nombre, String sector, String nivelEscolar, Usuario usuario, Ubicacion ubicacion) {
         this.nombre = nombre;
         Sector = sector;
         NivelEscolar = nivelEscolar;
         this.usuario = usuario;
+        this.ubicacion = ubicacion;
     }
 
     public String getId() {
@@ -67,5 +70,13 @@ public class Formulario implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 }

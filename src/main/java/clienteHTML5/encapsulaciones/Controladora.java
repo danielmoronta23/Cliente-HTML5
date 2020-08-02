@@ -24,7 +24,7 @@ public class Controladora {
         return controladora;
     }
 
-    //------------------------------Implementados metodos para Crear usuarios y autentificar.------------------------------
+    //------------------------------Metodos para crear Usuarios y autentificar.------------------------------
     public boolean agregarUsuario(Usuario usuario){
         return servicioUsuario.crear(usuario);
     }
@@ -44,6 +44,7 @@ public class Controladora {
     public List<Usuario> getServicioUsuario() {
         return servicioUsuario.explorarTodo();
     }
+
     // ------------------------------CRUD FORMULARIO ------------------------------
     public boolean agregarRegistro(Formulario formulario){
       return servicioFormulario.crear(formulario);
@@ -61,6 +62,7 @@ public class Controladora {
     public List<Formulario> getServicioFormulario() {
         return servicioFormulario.explorarTodo();
     }
+
     //------------------------------Creando Datos por defecto------------------------------
     public void crearDatosPorDefecto(){
         //Usuario por defecto
