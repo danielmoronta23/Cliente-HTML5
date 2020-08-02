@@ -1,5 +1,7 @@
 package clienteHTML5.Visual;
 
+import clienteHTML5.encapsulaciones.Controladora;
+import clienteHTML5.encapsulaciones.Usuario;
 import clienteHTML5.servicios.ServicioUsuario;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
@@ -32,7 +34,7 @@ public class ControladorPlantilla {
                     //FUNCION PARA IDENTIFICAR USUARIO MEDIANTE COOKIE
 
                     Map<String, Object> modelo = new HashMap<>();
-                    //modelo.put("user", ); <-- ENVIAR USUARIO CORRESPONDIENTE
+                    modelo.put("user", ctx.sessionAttribute("usuario")); //<-- ENVIAR USUARIO CORRESPONDIENTE
                     //modelo.put("forms", ); <-- PERSONAS REGISTRADAS POR EL USUARIO
                     ctx.render("publico/index.html", modelo);
                 }else{
@@ -79,21 +81,10 @@ public class ControladorPlantilla {
                 String pass = ctx.formParam("password");
                 String boton = ctx.formParam("checkbox");
 
-                if (autenticacion(user, pass)){
+                Usuario aux = Controladora.getInstance().autenticarUsuario(user, pass);
+                if (aux != null){
                     //creando un atributo de sesion
                     ctx.sessionAttribute("usuario", user);
-                    //RECORDAR USUARIO
-                    if(boton != null && ctx.sessionAttribute("sesion") == null) {
-                        int login_HASH = (int) Math.random();
-
-                        //ENCRIPTACIÓN DEL HASH de la Cookie
-                        BasicIntegerNumberEncryptor numberEncryptor = new BasicIntegerNumberEncryptor();
-                        numberEncryptor.setPassword("secreto");
-                        BigInteger myEncryptedNumber = numberEncryptor.encrypt(new BigInteger(String.valueOf(login_HASH)));
-
-                        // CREANDO COOKIE DE 604800 seg =  1 semana
-                        ctx.cookie("sesion", myEncryptedNumber.toString(), 604800);
-                    }
                     //PAGINA PRINCIPAL
                     ctx.redirect("/");
                 }
@@ -106,22 +97,21 @@ public class ControladorPlantilla {
 
 
 
+            //GUARDAR FORMULARIO
+            app.post("/formulario", ctx -> {
+               String nombre = ctx.formParam("nombre");
+               String sector = ctx.formParam("sector");
+               String usuario = ctx.formParam("usuario");
+
+
+               ctx.redirect("/");
+            });
+
+
+
         });
     }
 
 
-    //FUNCION PARA AUTENTICAR EL LOGIN DE UN USUARIO
-    private boolean autenticacion(String user, String pass) {
-        boolean resultado = true;
-        try{
-            if (true){//ServicioUsuario.getInstancia().find(user).getPassword().matches(pass)){  <-- QUITAR TRUE CUANDO CLASE ESTE LISTA
-                //resultado = true;
-            }
-
-        }catch (Exception e){
-            System.out.println("Usuario NO encontrado");
-        }
-        return resultado;
-    }
 
 }
