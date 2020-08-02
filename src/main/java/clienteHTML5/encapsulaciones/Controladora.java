@@ -13,7 +13,6 @@ public class Controladora {
     public Controladora() {
 
     }
-
     public  static Controladora getInstance() {
         if (controladora == null) {
             controladora = new Controladora();
