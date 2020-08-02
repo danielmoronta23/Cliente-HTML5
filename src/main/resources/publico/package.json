@@ -39,7 +39,8 @@
         "url": "https://github.com/StartBootstrap/startbootstrap-sb-admin.git"
     },
     "dependencies": {
-        "bootstrap": "4.5.0"
+        "bootstrap": "4.5.0",
+        "ol": "6.4.2"
     },
     "devDependencies": {
         "autoprefixer": "9.8.0",
@@ -51,6 +52,7 @@
         "pug": "3.0.0",
         "sass": "1.26.8",
         "shelljs": "0.8.4",
-        "upath": "1.2.0"
+        "upath": "1.2.0",
+        "parcel": "1.11.0"
     }
 }

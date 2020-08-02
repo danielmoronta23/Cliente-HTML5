@@ -10,6 +10,13 @@
     <link rel="icon" href="Logo_PUCMM.png" type="image/png">
     <link href="css/styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.2/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
             crossorigin="anonymous"></script>
 </head>
@@ -154,7 +161,7 @@
                                     <td class="align-middle" ; th:text="${Formularios.ubicacion.latitud}"></td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button type="button" id="vista1" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa">
+                                            <button type="button" id="vista" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa">
                                                 Visualizar Mapa
                                             </button>
                                         </div>
@@ -169,7 +176,7 @@
                                     <td>01.313</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button type="button" id="vista" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa">
+                                            <button type="button" id="vista1" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa" onclick="filaSeleccionada()">
                                                 Visualizar Mapa
                                             </button>
                                         </div>
@@ -208,10 +215,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.2/build/ol.js"></script>
             <div class="modal-body">
                 <div id="map" class="map"></div>
-                <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.2/build/ol.js"></script>
                 <script type="text/javascript">
+                    var longitud = 0.43126
+                    var latitud = 1.34245
+
+                    /*function filaSeleccionada() {
+                        var Row = document.closest('tr');
+                        longitud = Row.find('td:eq(5)').text();
+                        latitud = Row.find('td:eq(6)').text();
+                    }*/
 
                     var map = new ol.Map({
                         target: 'map',
@@ -221,7 +236,7 @@
                             })
                         ],
                         view: new ol.View({
-                            center: ol.proj.fromLonLat([0, 0]),
+                            center: ol.proj.fromLonLat([latitud, longitud]),
                             zoom: 4
                         })
                     });
@@ -233,16 +248,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).on('click','#vista',function () {
-        var Row = $(this).closest('tr');
-        var longitud = Row.find('td:eq(5)').text();
-        var latitud = Row.find('td:eq(6)').text();
-    })
-</script>
-
-
 <script>
     var modal = document.getElementById("modalMapa");
 

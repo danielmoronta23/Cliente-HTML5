@@ -1,16 +1,13 @@
 package clienteHTML5.Visual;
 
 import clienteHTML5.encapsulaciones.Controladora;
+import clienteHTML5.encapsulaciones.Formulario;
 import clienteHTML5.encapsulaciones.Usuario;
-import clienteHTML5.servicios.ServicioUsuario;
+import clienteHTML5.util.Roles;
 import io.javalin.Javalin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
-import org.jasypt.util.numeric.BasicIntegerNumberEncryptor;
-
-import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ControladorPlantilla {
 
@@ -33,9 +30,12 @@ public class ControladorPlantilla {
 
                     //FUNCION PARA IDENTIFICAR USUARIO MEDIANTE COOKIE
 
+                    Usuario usuario = Controladora.getInstance().buscarUsuario(ctx.sessionAttribute("usuario"));
+                    //TOMANDO FORMULARIOS CORRESPONDIENTE A ESE USUARIO
+                    List<Formulario> forms = formulariobyUser(Controladora.getInstance().getServicioFormulario(), usuario);
                     Map<String, Object> modelo = new HashMap<>();
-                    modelo.put("user", ctx.sessionAttribute("usuario")); //<-- ENVIAR USUARIO CORRESPONDIENTE
-                    //modelo.put("forms", ); <-- PERSONAS REGISTRADAS POR EL USUARIO
+                    modelo.put("user", usuario.getUsuario()); //<-- ENVIAR USUARIO CORRESPONDIENTE
+                    modelo.put("forms", forms);
                     ctx.render("publico/index.html", modelo);
                 }else{
                     ctx.redirect("/login");
@@ -56,6 +56,19 @@ public class ControladorPlantilla {
                 String contraseña = ctx.formParam("contra");
                 String rol = ctx.formParam("rol");
 
+                Usuario aux = new Usuario();
+                aux.setNombre(nombre);
+                aux.setUsuario(usuario);
+                aux.setPassword(contraseña);
+                //Colocando rol al usuario
+                if(rol.matches("Administrador"))
+                    aux.setListaRoles(Set.of(Roles.ROLE_ADMIN));
+                if(rol.matches("Empleado"))
+                    aux.setListaRoles(Set.of(Roles.ROLE_USUARIO));
+                else{
+                    aux.setListaRoles(Set.of(Roles.ROLES_VOLUNTARIO));
+                }
+                Controladora.getInstance().agregarUsuario(aux);
 
                 ctx.redirect("/");
             });
@@ -97,7 +110,7 @@ public class ControladorPlantilla {
 
 
 
-            //GUARDAR FORMULARIO
+            //GUARDAR FORMULARIOS
             app.post("/formulario", ctx -> {
                String nombre = ctx.formParam("nombre");
                String sector = ctx.formParam("sector");
@@ -108,10 +121,33 @@ public class ControladorPlantilla {
             });
 
 
+            //MOSTRAR VISTA DE LISTA DE FORMULARIOS
+            app.get("/informe", ctx -> {
+
+                Map<String, Object> modelo = new HashMap<>();
+                //ENVIADO USUARIO CORRESPONDIENTE A DICHA SESION
+                modelo.put("user", ctx.sessionAttribute("usuario"));
+                //ENVIANDO TODOS LOS FORMULARIOS DEL SERVIDOR
+                modelo.put("formularios", Controladora.getInstance().getServicioFormulario());
+                ctx.render("/publico/dist/Informe.html", modelo);
+            });
+
+
 
         });
     }
 
+    private List<Formulario> formulariobyUser(List<Formulario> servicioFormulario, Usuario user) {
+
+        List<Formulario> list = new ArrayList<Formulario>();
+
+        for (Formulario f: servicioFormulario) {
+            if (f.getUsuario().equals(user)){
+                list.add(f);
+            }
+        }
+        return list;
+    }
 
 
 }
