@@ -25,6 +25,7 @@ dataBase.onupgradeneeded = function (e) {
 };
 //El evento que se dispara una vez, lo
 dataBase.onsuccess = function (e) {
+    listarDatos();
     console.log('Proceso ejecutado de forma correctamente');
 };
 
