@@ -69,7 +69,7 @@
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
                          data-parent="#sidenavAccordion" th:if="${usuario!=null}">
                         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                            <a id="listForm" class="nav-link collapsed" href="#" data-toggle="collapse"
                                data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                 Usuarios
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -100,7 +100,7 @@
                         Visualizar mi Ubicación
                     </a>
                     <a class="nav-link">
-                        <button class="btn btn-primary align-items-center mt-4 mb-0 col-sm-12" onclick="">
+                        <button id="enviarForm" class="btn btn-primary align-items-center mt-4 mb-0 col-sm-12" onclick="">
                             <i class="fa fa-cloud"></i>
                             Enviar Formularios
                         </button>

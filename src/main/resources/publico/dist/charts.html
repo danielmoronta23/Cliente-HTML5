@@ -55,7 +55,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                                  data-parent="#sidenavAccordion" th:if="${usuario!=null}">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="Informe.html">Datos Recolectados</a>
+                                    <a id="listForm" class="nav-link" href="Informe.html">Datos Recolectados</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -87,7 +87,7 @@
                                 Visualizar mi Ubicación
                             </a>
                             <a class="nav-link">
-                                <button class="btn btn-primary align-items-center mt-4 mb-0 col-sm-12" onclick="">
+                                <button id="enviarForm" class="btn btn-primary align-items-center mt-4 mb-0 col-sm-12" onclick="">
                                     <i class="fa fa-cloud"></i>
                                     Enviar Formularios
                                 </button>
