@@ -55,12 +55,9 @@ public class ControladorPlantilla {
                 String nombre = ctx.formParam("nombre");
                 String usuario = ctx.formParam("usuario");
                 String contraseña = ctx.formParam("contra");
-                String rol = ctx.formParam("rol");
+                String rol = ctx.formParam("Rol");
 
-                Usuario aux = new Usuario();
-                aux.setNombre(nombre);
-                aux.setUsuario(usuario);
-                aux.setPassword(contraseña);
+                Usuario aux = new Usuario(nombre, usuario, contraseña);
                 //Colocando rol al usuario
                 if(rol.matches("Administrador"))
                     aux.setListaRoles(Set.of(Roles.ROLE_ADMIN));
