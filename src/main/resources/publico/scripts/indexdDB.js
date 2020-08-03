@@ -32,11 +32,26 @@ dataBase.onerror = function (e) {
     console.error('Error en el proceso: '+e.target.errorCode);
 };
 
+//---------------------------GEOLOGIZACIÓN--------------------------------
+//Obteniendo GEOLOCALIZACIÓN
+var lati="";
+var longi="";
+function GEOPosicion() {
+    function success(pos) {
+        var crd = pos.coords;
+        lati = crd.latitude;
+        longi = crd.longitude;
+    }
+    navigator.geolocation.getCurrentPosition(success);
+}
+
+
 //--------------------------------GRUD Formulario---------------------------
 function agregarFormulario() {
     //Agregar lo de Nivel Escolar...
     var name="";
     var sector="";
+
     name=$("#nombreF").val();
     sector=$("#sector").val();
     //validando campos..
@@ -55,20 +70,26 @@ function agregarFormulario() {
 
         transaccion.oncomplete = function (e) {
             document.querySelector("#nombreF").value = '';
-            alert('Objeto agregado correctamente!');
+            alert('Formulario agregado correctamente!');
+            listarDatos();
         };
 
         //Abriendo la colección de datos que estaremos usando.
         var formulario = transaccion.objectStore("formulario");
+
+
+
 
         //Para agregar se puede usar add o put; el add requiere que no exista el objeto.
         var request = formulario.put({
             //id: document.querySelector("#id").value,
             nombre: document.querySelector("#nombreF").value,
             sector: document.querySelector("#sector").value,
-            nivelEscolar: document.querySelector("#nivelEscolar").value
-
+            nivelEscolar: document.querySelector("#nivelEscolar").value,
+            latitud: lati,
+            longitud: longi
         });
+
 
         request.onerror = function (e) {
             var mensaje = "Error: " + e.target.errorCode;
@@ -84,7 +105,6 @@ function agregarFormulario() {
             document.querySelector("#nivelEscolar").value = "";
         };
 
-       listarDatos();
     }
     else {
         console.log("Debe Completar todos los campos requeridos...")
@@ -101,6 +121,7 @@ function borrarFormulario() {
 
     formulario.delete(parseInt(id)).onsuccess = function (e) {
         console.log("Formulario eliminado...");
+        listarDatos();
     };
 
 }
@@ -140,6 +161,7 @@ function editarFormulario() {
             //eventos.
             solicitudUpdate.onsuccess = function (e) {
                 console.log("Datos Actualizados....");
+                listarDatos();
             }
             solicitudUpdate.onerror = function (e) {
                 console.error("Error Datos Actualizados....");
@@ -195,6 +217,5 @@ function imprimirTabla(lista_formulario) {
 
     }
     document.getElementById("listaFormulario").innerHTML=fila;
-
 
 }

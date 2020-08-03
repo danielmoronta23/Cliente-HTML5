@@ -101,45 +101,43 @@
                     </div>
                 </nav>
             </div>
-            <div id="layoutSidenav_content">
+            <div id="layoutSidenav_content" class="bg-secondary">
                 <main>
                     <div class="container-fluid">
 
-                        <h1 class="breadcrumb mb-4 justify-content-center">Formularios</h1>
+                        <h4 class="breadcrumb mb-4 justify-content-center"><strong>Encuesta - Oficina de Planeamiento -</strong></h4>
 
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar mr-1"></i>
-                                        Realizar Formulario
-                                    </div>
-                                    <!--<form method="post" id="nuevoForm"> -->
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="nombreF" name="nombreF" placeholder="Nombre" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="sector" name="sector" placeholder="Sector" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <select class="custom-select mr-sm-2" id="nivelEscolar" name="nivelEscolar" required>
-                                                    <option selected> Nivel Academico</option>
-                                                    <option value="Basico">Basico</option>
-                                                    <option value="Medio">Medio</option>
-                                                    <option value="Grado">Grado</option>
-                                                    <option value="Maestria">Maestria</option>
-                                                    <option value="Doctorado">Doctorado</option>
-                                                </select>
-                                            </div>
-                                            <input type="hidden" name="usuario" th:value="${user}">
-                                        </div>
-                                        <div class="card-footer">
-                                            <button id="guadarFrom" class="btn-success btn ml-mr"  onclick="agregarFormulario()">Guardar Formulario</button>
-                                        </div>
-                                       <!-- </form> -->
-                                </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar mr-1"></i>
+                                Realizar Formulario
                             </div>
+                            <!--<form method="post" id="nuevoForm"> -->
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="nombreF" name="nombreF" placeholder="Nombre" onclick="GEOPosicion()" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="sector" name="sector" placeholder="Sector" required>
+                                </div>
+                                <div class="form-group">
+                                    <select class="custom-select mr-sm-2" id="nivelEscolar" name="nivelEscolar" required>
+                                        <option selected> Nivel Academico</option>
+                                        <option value="Basico">Basico</option>
+                                        <option value="Medio">Medio</option>
+                                        <option value="Grado">Grado</option>
+                                        <option value="Maestria">Maestria</option>
+                                        <option value="Doctorado">Doctorado</option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="usuario" th:value="${user}">
+                                <input type="hidden" name="latitud" id="latitud" value="">
+                                <input type="hidden" id="longitud" value="">
+                            </div>
+                            <div class="card-footer">
+                                <button id="guadarFrom" class="btn-success btn ml-mr"  onclick="agregarFormulario()">Guardar Formulario</button>
+                            </div>
+                            <!-- </form> -->
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
@@ -230,8 +228,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save" onclick="editarFormulario()">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal" onclick="editarFormulario()">Editar</button>
                         </div>
                     </form>
                 </div>
@@ -248,12 +246,12 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <p>Are you sure you want to delete these Records?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                            <p>¿Esta seguro que desea eliminar este formulario?</p>
+                            <p class="text-danger"><small>Esta acción no se puede Deshacer.</small></p>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-info" value="Save" onclick="borrarFormulario()">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <button type="button"  id="btnEliminar" class="btn btn-danger" data-dismiss="modal" onclick="borrarFormulario()">Eliminar</button>
                         </div>
                     </form>
                 </div>
@@ -271,6 +269,8 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="assets/demo/datatables-demo.js"></script>
+
+
     <!-- ----------------------IndexdDB--------------------------->
    <script src="../scripts/indexdDB.js"></script>
     <!-- ----------------------Editar from --------------------------->
