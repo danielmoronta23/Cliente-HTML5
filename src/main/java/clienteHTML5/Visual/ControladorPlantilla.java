@@ -35,6 +35,7 @@ public class ControladorPlantilla {
                     List<Formulario> forms = formulariobyUser(Controladora.getInstance().getServicioFormulario(), usuario);
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("user", usuario.getUsuario()); //<-- ENVIAR USUARIO CORRESPONDIENTE
+                    //ENVIANDO FORMULARIOS
                     modelo.put("forms", forms);
                     ctx.render("publico/index.html", modelo);
                 }else{

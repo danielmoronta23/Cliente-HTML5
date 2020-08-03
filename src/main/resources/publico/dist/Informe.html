@@ -58,12 +58,11 @@
                          data-parent="#sidenavAccordion" th:if="${usuario!=null}">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="Informe.html">Datos Recolectados</a>
-                            <a class="nav-link" href="layout-sidenav-light.html">Cantidad de Empleados</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                        aria-expanded="false" aria-controls="collapsePages" th:if="${usuario!=null}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
                         Configuraciones
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -161,7 +160,7 @@
                                     <td class="align-middle" ; th:text="${Formularios.ubicacion.latitud}"></td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button type="button" id="vista" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa">
+                                            <button type="button" id="vista" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa" onclick="filaSeleccionada()">
                                                 Visualizar Mapa
                                             </button>
                                         </div>
@@ -172,11 +171,11 @@
                                     <td>Santiago</td>
                                     <td>Doctora</td>
                                     <td>Pepe</td>
-                                    <td>20.11</td>
-                                    <td>01.313</td>
+                                    <td>37.41</td>
+                                    <td>8.82</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button type="button" id="vista1" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa" onclick="filaSeleccionada()">
+                                            <button type="button" id="vista1" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa" onclick="">
                                                 Visualizar Mapa
                                             </button>
                                         </div>
@@ -206,74 +205,68 @@
 </body>
 <!-- VISTA DE MAPA -->
 <!-- Modal -->
-<div class="modal fade" id="modalMapa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalMapa" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title justify-content-center" id="exampleModalLabel">Ubicación del Cliente del Formulario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModalLabel">Ubicación del Cliente del Formulario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="actualizar()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.2/build/ol.js"></script>
             <div class="modal-body">
-                <div id="map" class="map"></div>
-                <script type="text/javascript">
-                    var longitud = 0.43126
-                    var latitud = 1.34245
-
-                    /*function filaSeleccionada() {
-                        var Row = document.closest('tr');
-                        longitud = Row.find('td:eq(5)').text();
-                        latitud = Row.find('td:eq(6)').text();
-                    }*/
-
-                    var map = new ol.Map({
-                        target: 'map',
-                        layers: [
-                            new ol.layer.Tile({
-                                source: new ol.source.OSM()
-                            })
-                        ],
-                        view: new ol.View({
-                            center: ol.proj.fromLonLat([latitud, longitud]),
-                            zoom: 4
-                        })
-                    });
-                </script>
+                <div class="card" id="display">
+                    <div id="map" class="map"></div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="actualizar()">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
-<script>
-    var modal = document.getElementById("modalMapa");
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("vista");
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.2/build/ol.js"></script>
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+<script type="text/javascript">
 
-    // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-        modal.style.display = "block";
+    function actualizar(){
+        window.location.reload();
+        return false;
     }
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+
+    $(document).ready(function($) {
+        $('#dataTable tbody').on('click', '.btn-primary', function () {
+            console.log("Entrando a funcion para ver mapa")
+            var Row = $(this).closest('tr');
+            ;
+            var longitud = Row.find('td:eq(4)').text();
+            var latitud = Row.find('td:eq(5)').text();
+
+
+            Mostrar(longitud, latitud);
+        });
+
+
+        function Mostrar(longitud, latitud) {
+            console.log("la longitud: " + longitud);
+
+            var map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([parseFloat(latitud), parseFloat(longitud)]),
+                    zoom: 4
+                })
+            });
         }
-    }
+    });
 </script>
-
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
