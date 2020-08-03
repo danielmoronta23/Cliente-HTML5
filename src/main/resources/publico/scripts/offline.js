@@ -36,7 +36,7 @@ function indicador(condition) {
         document.getElementById("listForm").setAttribute("href", "#");
     }
 }
-
+/*
 //FUNCION PARA LA UTILIZACIÓN DE WEBSTORAGE
 function Local() {
     var almacenamiento = localStorage.getItem("BackUp_fecha");
@@ -50,4 +50,4 @@ function Local() {
         sessionStorage.setItem("BackUp_fecha", new Date().toUTCString())
     }
 
-}
+}*/
