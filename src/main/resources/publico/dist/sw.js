@@ -10,7 +10,6 @@ if('serviceWorker' in navigator) {
 }
 let cache_name = 'mypag_v1'
 let urls_to_cache = [
-    '/',
     '/dist/index.html',
     '/dist/js/scripts.js',
     '/dist/404.html',

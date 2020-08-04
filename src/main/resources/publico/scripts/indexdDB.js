@@ -52,11 +52,13 @@ function agregarFormulario() {
     //Agregar lo de Nivel Escolar...
     var name="";
     var sector="";
+    var nivel="";
 
     name=$("#nombreF").val();
     sector=$("#sector").val();
+    nivel=$("#nivelEscolar").val()
     //validando campos..
-    if(name!="" && sector!="") {
+    if(name!="" && sector!="" && nivel!="") {
 
         var dbActiva = dataBase.result; //Nos retorna una referencia al IDBDatabase.
 
@@ -108,7 +110,7 @@ function agregarFormulario() {
 
     }
     else {
-        console.log("Debe Completar todos los campos requeridos...")
+        alert("Debe Completar todos los campos requeridos...")
     }
 }
 

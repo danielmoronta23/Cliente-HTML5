@@ -57,7 +57,7 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/informe">Datos Recolectados</a>
+                            <a class="nav-link" href="/Dameinforme">Datos Recolectados</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="sb-sidenav-footer">
-                <div class="small" th:text="registrado como: + ${user}"></div>
+                <div class="small"></div>
             </div>
         </nav>
     </div>
@@ -117,7 +117,7 @@
             <div class="container-fluid">
                 <h2 class="mt-4">Datos Recolectados Actualmente</h2>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">Panel de Control</a></li>
+                    <li class="breadcrumb-item"><a href="/">Panel de Control</a></li>
                     <li class="breadcrumb-item active">Informe</li>
                 </ol>
                 <div class="card mb-4">
@@ -151,11 +151,11 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <tr th:each="Formularios : ${listaProducto}" id="userTable">
+                                <tr th:each="Formularios : ${formularios}" id="userTable">
                                     <td class="align-middle" ; th:text="${Formularios.nombre}"></td>
                                     <td class="align-middle" ; th:text="${Formularios.Sector}"></td>
                                     <td class="align-middle" ; th:text="${Formularios.NivelEscolar}"></td>
-                                    <td class="align-middle" ; th:text="${Formularios.usuario}"></td>
+                                    <td class="align-middle" ; th:text="${Formularios.usuario.usuario}"></td>
                                     <td class="align-middle" ; th:text="${Formularios.ubicacion.longitud}"></td>
                                     <td class="align-middle" ; th:text="${Formularios.ubicacion.latitud}"></td>
                                     <td>
@@ -260,7 +260,7 @@
                     })
                 ],
                 view: new ol.View({
-                    center: ol.proj.fromLonLat([parseFloat(latitud), parseFloat(longitud)]),
+                    center: ol.proj.fromLonLat([parseFloat(longitud), parseFloat(latitud)]),
                     zoom: 4
                 })
             });

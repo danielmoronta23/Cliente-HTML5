@@ -104,7 +104,7 @@ public class ControladorPlantilla {
 
 
             //MOSTRAR VISTA DE LISTA DE FORMULARIOS
-            app.get("/informe", ctx -> {
+            app.get("/Dameinforme", ctx -> {
 
                 Map<String, Object> modelo = new HashMap<>();
                 //ENVIADO USUARIO CORRESPONDIENTE A DICHA SESION
@@ -122,7 +122,7 @@ public class ControladorPlantilla {
     private List<Formulario> formulariobyUser(List<Formulario> servicioFormulario, Usuario user) {
 
         List<Formulario> list = new ArrayList<Formulario>();
-
+        System.out.println("Buscando Formulario del usuario");
         for (Formulario f: servicioFormulario) {
             if (f.getUsuario().equals(user)){
                 list.add(f);
