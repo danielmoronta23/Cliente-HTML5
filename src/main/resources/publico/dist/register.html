@@ -21,7 +21,7 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Crear nueva cuenta</h3></div>
                                     <div class="card-body">
-                                        <form method="post" action="/registrar" onsubmit="return ValidateForm();">
+                                        <form method="post" action="/registrar">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <input class="form-control py-4" id="inputName" type="text" placeholder="Nombre" name="nombre" required/>
@@ -54,8 +54,8 @@
                                                     <legend>¿Rol de Trabajo?</legend>
                                                     <br>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="Rol" id="inlineRadio1" value="Administrador">
-                                                        <label class="form-check-label" for="inlineRadio1">Administrador</label>
+                                                        <input class="form-check-input" type="radio" name="Rol" id="inlineRadio1" value="Administrador" checked>
+                                                        <label class="form-check-label" for="inlineRadio1" >Administrador</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="Rol" id="inlineRadio2" value="Empleado">
@@ -82,6 +82,8 @@
                                                     alert("Contraseñas Distintas!")
                                                     return false;
                                                 }
+                                                //estado = ValidateForm();
+                                                console.log("Estado de validacion: ", ValidateForm())
                                                 return true;
                                             }
                                         </script>
@@ -93,13 +95,13 @@
                                                 for(var i = 0; i < radioButtons.length; i++)
                                                 {
                                                     if(radioButtons[i].checked == true)
+                                                    console.log("Valor en", i, "Verdadero")
                                                     {
                                                         if(confirm("Haz seleccionado " + radioButtons[i].value + " como rol. ¿Estas Seguro?"))
                                                             return true;
-                                                        else
-                                                            return false;
                                                     }
                                                 }
+                                                return false;
                                             }
                                         </script>
 
