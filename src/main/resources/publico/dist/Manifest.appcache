@@ -3,7 +3,7 @@ CACHE MANIFEST
  
 CACHE:
 # pages
-localhost:7000/
+/
 
 # styles & scripts
 /css/styles.css
