@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th>
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -67,8 +67,10 @@
                                                     </div>
                                                 </fieldset>
                                             </div>
-
-                                            <br>
+                                            <div class="col-md-12">
+                                                <br>
+                                                <h6 DIV ALIGN=center th:text="${Error}" style="color:#ff0000"></h6>
+                                            </div>
                                             <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" onclick="return ValidatePass()">Crear Cuenta</button></div>
                                         </form>
 

@@ -46,13 +46,16 @@ public class ControladorPlantilla {
 
             //REGISTRAR USUARIO
             app.post("/registrar", ctx -> {
+                Map<String, Object> modelo = new HashMap<>();
+
                 String nombre = ctx.formParam("nombre");
                 String usuario = ctx.formParam("usuario");
-                String contraseña = ctx.formParam("contra");
+                String contrasenna = ctx.formParam("contra");
                 String rol = ctx.formParam("Rol");
-
-                Usuario aux = new Usuario(nombre, usuario, contraseña);
+                System.out.println("el valor es> "+ctx.formParam("Rol"));
+                Usuario aux = new Usuario(usuario, nombre, contrasenna);
                 //Colocando rol al usuario
+                if(rol!=null){
                 if(rol.matches("Administrador"))
                     aux.setListaRoles(Set.of(Roles.ROLE_ADMIN));
                 if(rol.matches("Empleado"))
@@ -60,9 +63,22 @@ public class ControladorPlantilla {
                 else{
                     aux.setListaRoles(Set.of(Roles.ROLES_VOLUNTARIO));
                 }
-                Controladora.getInstance().agregarUsuario(aux);
+                if(Controladora.getInstance().buscarUsuario(usuario)==null){
+                    Controladora.getInstance().agregarUsuario(aux);
+                    ctx.render("publico/dist/index.html", modelo);
+                    System.out.println("CREADO EXISTOSAMENTE");
+                }else{
+                    //El nombre de usuario ya existe, intentelo de nuevo.
+                    modelo.put("Error", "El nombre de usuario ya existe. Intentelo de nuevo! ");
+                    ctx.render("publico/dist/register.html", modelo);
+                    System.out.println("NO SE PUDO CREAR EXISTOSAMENTE");
 
-                ctx.redirect("/");
+                }
+                }else{
+                    //Se debe asignar un rol
+                    System.out.println("Se debe asignar un rol");
+                }
+
             });
 
             //VISTA DEL LOGIN
@@ -82,6 +98,7 @@ public class ControladorPlantilla {
 
             //AUTENTICACIÓN EN EL LOGIN
             app.post("/ingresar", ctx -> {
+                Map<String, Object> modelo = new HashMap<>();
                 String user = ctx.formParam("usuario");
                 String pass = ctx.formParam("password");
                 String boton = ctx.formParam("checkbox");
@@ -94,8 +111,9 @@ public class ControladorPlantilla {
                     ctx.redirect("/");
                 }
                 else{
+                    modelo.put("Error", "Please check username & password! ");
                     //RETORNO A LOGIN
-                    ctx.redirect("/login");
+                    ctx.render("publico/dist/login.html", modelo);
                 }
 
             });
