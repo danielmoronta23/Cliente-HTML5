@@ -44,12 +44,6 @@ public class ControladorPlantilla {
             });
 
 
-
-            //ENVIAR DATOS AL SERVIDOR
-            app.post("/EnviarServidor", ctx -> {
-
-            });
-
             //REGISTRAR USUARIO
             app.post("/registrar", ctx -> {
                 String nombre = ctx.formParam("nombre");
@@ -107,16 +101,6 @@ public class ControladorPlantilla {
             });
 
 
-
-            //GUARDAR FORMULARIOS
-            app.post("/formulario", ctx -> {
-               String nombre = ctx.formParam("nombre");
-               String sector = ctx.formParam("sector");
-               String usuario = ctx.formParam("usuario");
-
-
-               ctx.redirect("/");
-            });
 
 
             //MOSTRAR VISTA DE LISTA DE FORMULARIOS

@@ -4,7 +4,7 @@ CACHE MANIFEST
 CACHE:
 # pages
 /dist/index.html
- 
+
 # styles & scripts
 /dist/css/styles.css
 /dist/js/scripts.js
