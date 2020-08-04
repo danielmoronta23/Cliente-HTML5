@@ -2,8 +2,10 @@ package clienteHTML5.encapsulaciones;
 
 import clienteHTML5.servicios.ServicioFormulario;
 import clienteHTML5.servicios.ServicioUsuario;
+import clienteHTML5.util.Roles;
 
 import java.util.List;
+import java.util.Set;
 
 public class Controladora {
     private static Controladora controladora = null;
@@ -67,7 +69,7 @@ public class Controladora {
         //Usuario por defecto
         if(servicioUsuario.buscar("admin")==null){
             //Asignar un rol
-            servicioUsuario.crear(new Usuario("admin", "admin", "1234"));
+            servicioUsuario.crear(new Usuario("admin", "admin", "1234", Set.of(Roles.ROLE_ADMIN)));
         }
     }
 }

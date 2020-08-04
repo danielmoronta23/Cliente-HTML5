@@ -37,7 +37,7 @@ public class ControladorPlantilla {
                     modelo.put("user", usuario.getUsuario()); //<-- ENVIAR USUARIO CORRESPONDIENTE
                     //ENVIANDO FORMULARIOS
                     modelo.put("forms", forms);
-                    ctx.render("publico/index.html", modelo);
+                    ctx.render("publico/dist/index.html", modelo);
                 }else{
                     ctx.redirect("/login");
                 }

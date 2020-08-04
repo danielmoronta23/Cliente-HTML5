@@ -88,9 +88,9 @@ function agregarFormulario() {
             sector: document.querySelector("#sector").value,
             nivelEscolar: document.querySelector("#nivelEscolar").value,
             latitud: lati,
-            longitud: longi
+            longitud: longi,
+            usuario: document.querySelector("#idUsuario").value
         });
-
 
         request.onerror = function (e) {
             var mensaje = "Error: " + e.target.errorCode;
@@ -103,7 +103,7 @@ function agregarFormulario() {
             //document.querySelector("#id").value = "";
             document.querySelector("#nombreF").value = "";
             document.querySelector("#sector").value = "";
-            document.querySelector("#nivelEscolar").value = "";
+            document.querySelector("#nivelEscolar").value = "Nivel Academico";
         };
 
     }
@@ -219,4 +219,59 @@ function imprimirTabla(lista_formulario) {
     }
     document.getElementById("listaFormulario").innerHTML=fila;
 
+}
+
+
+//--------------------------------Conexion con el servidor (Envios/recesión de datos)--------------------------------
+//abriendo el objeto para el websocket
+var webSocket;
+var tiempoReconectar = 5000;
+
+$(document).ready(function(){
+    console.info("Iniciando Jquery -  WebServices");
+    conectar();
+
+    //Endicar id Boton enviar datos
+    $("#enviarForm").click(function(){
+        console.log("Enviando formulario al servidor")
+        //webSocket.send($("#idUsuario").val()); ///Si se desea enviar un mensaje al sevidor
+        enviarDatoServidor();
+    });
+});
+function recibirInfServidor(mensaje){
+    console.log("Recibiendo del servidor: "+mensaje.data)
+    $("#mensajeServidor").append(mensaje.data);
+}
+function conectar() {
+    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/conectarServidor");
+
+    webSocket.onmessage = function(data){recibirInformacionServidor(data);};
+    webSocket.onopen  = function(e){ console.log("Conectado - status "+this.readyState); };
+    webSocket.onclose = function(e){
+        console.log("Desconectado - status "+this.readyState);
+    };
+}
+function enviarDatoServidor(){
+    var data = dataBase.result.transaction(["formulario"]);
+    var formularios = data.objectStore("formulario");
+    var listaFormulario = formularios.getAll();
+
+    listaFormulario.onsuccess=function (){
+        //datos obtenido de forma correcta
+        webSocket.send(JSON.stringify(listaFormulario.result));
+        alert("Formularios enviado de forma exitosa!")
+        limpiarDB();
+        listarDatos();
+    };
+
+
+}
+function limpiarDB(){
+    const data = dataBase.result.transaction(["formulario"],"readwrite");
+    const objecStore = data.objectStore("formulario");
+    const repuesta = objecStore.clear();
+    repuesta.onsuccess = function (){
+        //Se han borrados todos los formulario de la BD
+        console.log("Se han borrados todos los formulario de la BD");
+    };
 }
