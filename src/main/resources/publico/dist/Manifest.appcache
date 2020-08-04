@@ -3,12 +3,12 @@ CACHE MANIFEST
  
 CACHE:
 # pages
-/dist/index.html
+localhost:7000/
 
 # styles & scripts
-/dist/css/styles.css
-/dist/js/scripts.js
-/dist/sw.js
+/css/styles.css
+/js/scripts.js
+/sw.js
 /scripts/indexdDB.js
 /scripts/offline.js
 /scripts/clean.js

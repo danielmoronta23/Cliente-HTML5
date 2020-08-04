@@ -10,14 +10,14 @@ if('serviceWorker' in navigator) {
 }
 let cache_name = 'mypag_v1'
 let urls_to_cache = [
-    '/dist/index.html',
-    '/dist/js/scripts.js',
-    '/dist/404.html',
-    '/dist/Logo_PUCMM.png',
-    '/dist/css/styles.css',
+    '/',
+    '/js/scripts.js',
+    '/404.html',
+    '/Logo_PUCMM.png',
+    '/css/styles.css',
     '/scripts/indexdDB.js',
     '/scripts/offline.js',
-    '/scripts/clean.js'
+    '/sw.js'
 ]
 self.addEventListener('install', (e) => {
     e.waitUntil(caches.open(cache_name).then((cache) => {

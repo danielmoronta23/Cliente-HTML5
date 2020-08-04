@@ -22,7 +22,8 @@ function indicador(condition) {
 
         ///botones para interactual con el servidor
         document.getElementById("enviarForm").removeAttribute("disabled")
-        document.getElementById("listForm").setAttribute("href","Informe.html");
+        document.getElementById("listForm").setAttribute("href","/Dameinforme");
+        document.getElementById("btnmapa").setAttribute("href", "charts.html");
     }
     if (condition === "offline"){
 
@@ -34,6 +35,8 @@ function indicador(condition) {
         ///botones para interactual con el servidor
         document.getElementById("enviarForm").setAttribute("disabled", "true");
         document.getElementById("listForm").setAttribute("href", "#");
+        document.getElementById("btnmapa").setAttribute("href", "#");
+
     }
 }
 /*
