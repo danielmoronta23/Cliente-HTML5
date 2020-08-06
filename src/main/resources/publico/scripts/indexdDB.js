@@ -259,7 +259,7 @@ function recibirInfServidor(mensaje){
     $("#mensajeServidor").append(mensaje.data);
 }
 function conectar() {
-    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/conectarServidor");
+    webSocket = new WebSocket("wss://" + location.hostname + ":" + location.port + "/conectarServidor");
 
     webSocket.onmessage = function(data){recibirInformacionServidor(data);};
     webSocket.onopen  = function(e){ console.log("Conectado - status "+this.readyState); };
