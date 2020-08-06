@@ -16,7 +16,7 @@ public class Main {
             config.addStaticFiles("/publico/dist");
             config.addStaticFiles("/publico/scripts");
             config.enableCorsForAllOrigins();
-        }).start(7080);
+        }).start(8043);
         try {
             ConexionDB.getInstance();
             Controladora.getInstance().crearDatosPorDefecto();

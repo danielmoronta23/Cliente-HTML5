@@ -11,8 +11,8 @@
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.2/css/ol.css" type="text/css">
         <style>
-            .map {
-                height: 400px;
+            #map {
+                height: 500px;
                 width: 100%;
             }
         </style>
@@ -60,7 +60,7 @@
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                                aria-expanded="false" aria-controls="collapsePages" th:if="${usuario!=null}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-fa-cogs"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>
                                 Configuraciones
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -119,43 +119,32 @@
                             </div>
                             <div class="card-body">
                                 <div id="map" class="map"></div>
-                                <script type="text/javascript">
+                                <script>
+                                    function success(pos){
+                                        var crd = pos.coords
+                                        iniciarMap(crd.latitude, crd.longitude)
+                                    }
+                                    navigator.geolocation.getCurrentPosition(success)
 
-
-                                    var options = {
-                                        enableHighAccuracy: true,
-                                        timeout: 5000,
-                                        maximumAge: 0
-                                    };
-
-                                    function success(pos) {
-                                        var crd = pos.coords;
-
-                                        console.log('Your current position is:');
-                                        console.log('Latitude : ' + crd.latitude);
-                                        console.log('Longitude: ' + crd.longitude);
-                                        console.log('More or less ' + crd.accuracy + ' meters.');
-
-                                        var map = new ol.Map({
-                                            target: 'map',
-                                            layers: [
-                                                new ol.layer.Tile({
-                                                    source: new ol.source.OSM()
-                                                })
-                                            ],
-                                            view: new ol.View({
-                                                center: ol.proj.fromLonLat([crd.longitude, crd.latitude]),
-                                                zoom: 4
-                                            })
+                                    function iniciarMap(lat,lng){
+                                        var coord = {lat:lat ,lng:lng};
+                                        var map = new google.maps.Map(document.getElementById('map'),{
+                                            zoom: 8.1,
+                                            center: coord
+                                        });
+                                        addMarker({lat:lat ,lng: lng}, map)
+                                        addMarker({lat:lat ,lng: lng}, map)
+                                    }
+                                    function addMarker(location, map) {
+                                        // Add the marker at the clicked location, and add the next-available label
+                                        // from the array of alphabetical characters.
+                                        new google.maps.Marker({
+                                            position: location,
+                                            map: map
                                         });
                                     }
-
-                                    function error(err) {
-                                        console.warn('ERROR(' + err.code + '): ' + err.message);
-                                    };
-
-                                    navigator.geolocation.getCurrentPosition(success, error, options);
                                 </script>
+                                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmO0JHOHAXY2C3Ud49KbMSwFf3APep1Ow&callback=iniciarMap"></script>
                             </div>
                             <div class="card-footer">
 

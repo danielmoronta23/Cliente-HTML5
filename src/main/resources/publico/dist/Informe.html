@@ -10,9 +10,11 @@
     <link rel="icon" href="Logo_PUCMM.png" type="image/png">
     <link href="css/styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.2/css/ol.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <style>
-        .map {
-            height: 400px;
+        #map {
+            height: 500px;
             width: 100%;
         }
     </style>
@@ -122,6 +124,27 @@
                 </ol>
                 <div class="card mb-4">
                     <div class="card-header">
+                        <i class="fas fa-chart-area mr-1"></i>
+                        Recopilación de Datos
+                    </div>
+
+
+
+                    <div class="card-body">
+                        <div>
+                            <!--Agregando datos para graficar-->
+                            <canvas id="pie-chart" width="800" height="450"></canvas>
+                            <input type="hidden" id="idcantBasico" name="idcantBasico"  th:value="${cantBasico}">
+                            <input type="hidden" id="idcantMedio" name="idcantMedio" th:value="${cantMedio}">
+                            <input type="hidden" id="idcantGrado" name="idcantGrado" th:value="${cantGrado}">
+                            <input type="hidden" id="idcantMaestria" name="idcantMaestria" th:value="${cantMaestria}">
+                            <input type="hidden" id="idcantDoctorado" name="idcantDoctorado" th:value="${cantDoctorado}">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
                         <i class="fas fa-table mr-1"></i>
                         Formularios en Base de Datos
                     </div>
@@ -160,22 +183,7 @@
                                     <td class="align-middle" ; th:text="${Formularios.ubicacion.latitud}"></td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <button type="button" id="vista" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa" onclick="filaSeleccionada()">
-                                                Visualizar Mapa
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Donna Snider</td>
-                                    <td>Santiago</td>
-                                    <td>Doctora</td>
-                                    <td>Pepe</td>
-                                    <td>37.41</td>
-                                    <td>8.82</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <button type="button" id="vista1" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa" onclick="">
+                                            <button type="button" id="vista" class="btn btn-primary" data-toggle="modal" data-target="#modalMapa">
                                                 Visualizar Mapa
                                             </button>
                                         </div>
@@ -203,6 +211,46 @@
     </div>
 </div>
 </body>
+
+<!---GRAFICA----------------------->
+<script>
+    $(document).ready(function () {
+
+        var cantBasico = parseFloat(document.querySelector("#idcantBasico").value);
+        var cantMedio = parseFloat(document.querySelector("#idcantMedio").value);
+        var cantGrado =  parseFloat(document.querySelector("#idcantGrado").value);
+        var cantMaestria = parseFloat(document.querySelector("#idcantMaestria").value);
+        var cantDoctorado = parseFloat(document.querySelector("#idcantDoctorado").value);
+        var total = cantBasico+cantMedio+cantGrado+cantMaestria+cantDoctorado;
+        new Chart(document.getElementById("pie-chart"), {
+            type: 'pie',
+            data: {
+                labels: ["Basico: "+((cantBasico/total)*100).toFixed(2)+"%","Medio: "+((cantMedio/total)*100).toFixed(2)+"%", "Grado: "+((cantGrado/total)*100).toFixed(2)+"%", "Maestria: "+((cantMaestria/total)*100).toFixed(2)+"%", "Doctorado: "+((cantDoctorado/total)*100).toFixed(2)+"%"],
+                datasets: [{
+                    label: "Population (millions)",
+                    backgroundColor: [
+                        "#3e95cd",
+                        "#8e5ea2",
+                        "#3cba9f",
+                        "#e8c3b9",
+                        "#c45850"],
+                    data: [cantBasico, cantMedio, cantGrado, cantMaestria, cantDoctorado]
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Niveles Academicos Tabulados'
+                }
+            }
+        });
+
+    })
+
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmO0JHOHAXY2C3Ud49KbMSwFf3APep1Ow&callback=iniciarMap"></script>
 <!-- VISTA DE MAPA -->
 <!-- Modal -->
 <div class="modal fade" id="modalMapa" tabindex="-1">
@@ -210,17 +258,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ubicación del Cliente del Formulario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="actualizar()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="card" id="display">
-                    <div id="map" class="map"></div>
-                </div>
+                <div id="map"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="actualizar()">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -240,29 +286,27 @@
         $('#dataTable tbody').on('click', '.btn-primary', function () {
             console.log("Entrando a funcion para ver mapa")
             var Row = $(this).closest('tr');
-            ;
             var longitud = Row.find('td:eq(4)').text();
             var latitud = Row.find('td:eq(5)').text();
 
-
-            Mostrar(longitud, latitud);
+            iniciarMap(parseFloat(latitud), parseFloat(longitud));
         });
 
 
-        function Mostrar(longitud, latitud) {
-            console.log("la longitud: " + longitud);
-
-            var map = new ol.Map({
-                target: 'map',
-                layers: [
-                    new ol.layer.Tile({
-                        source: new ol.source.OSM()
-                    })
-                ],
-                view: new ol.View({
-                    center: ol.proj.fromLonLat([parseFloat(longitud), parseFloat(latitud)]),
-                    zoom: 4
-                })
+        function iniciarMap(lat,lng){
+            var coord = {lat:lat ,lng:lng};
+            var map = new google.maps.Map(document.getElementById('map'),{
+                zoom: 8.1,
+                center: coord
+            });
+            addMarker({lat:lat ,lng: lng}, map)
+        }
+        function addMarker(location, map) {
+            // Add the marker at the clicked location, and add the next-available label
+            // from the array of alphabetical characters.
+            new google.maps.Marker({
+                position: location,
+                map: map
             });
         }
     });
