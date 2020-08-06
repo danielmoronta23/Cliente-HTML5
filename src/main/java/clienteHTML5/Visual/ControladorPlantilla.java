@@ -129,10 +129,16 @@ public class ControladorPlantilla {
                 modelo.put("user", ctx.sessionAttribute("usuario"));
                 //ENVIANDO TODOS LOS FORMULARIOS DEL SERVIDOR
                 modelo.put("formularios", Controladora.getInstance().getServicioFormulario());
+                //----- Enviando cantidad de nivel academico clasificado///
+                List<Integer> list  = listCanNivelAcademico();
+                modelo .put("cantBasico", list.get(0));
+                modelo .put("cantMedio", list.get(1));
+                modelo .put("cantGrado", list.get(2));
+                modelo .put("cantMaestria", list.get(3));
+                modelo .put("cantDoctorado", list.get(4));
+                ///-----
                 ctx.render("/publico/dist/Informe.html", modelo);
             });
-
-
 
         });
     }
@@ -148,6 +154,39 @@ public class ControladorPlantilla {
         }
         return list;
     }
+    private List<Integer> listCanNivelAcademico(){
+        List<Integer> list = new ArrayList<>();
+        List<Formulario> formularios = new ArrayList<>();
+        formularios = Controladora.getInstance().getServicioFormulario();
+        int cantBasico = 0;
+        int cantMedio = 0;
+        int cantGrado = 0;
+        int cantMaestria = 0;
+        int cantDoctorado = 0;
+        for (Formulario f:formularios) {
+            if(f.getNivelEscolar().equalsIgnoreCase("Basico")){
+                cantBasico++;
+            }
+            if(f.getNivelEscolar().equalsIgnoreCase("Medio")){
+                cantMedio++;
+            }
+            if(f.getNivelEscolar().equalsIgnoreCase("Grado")){
+                cantGrado++;
+            }
+            if(f.getNivelEscolar().equalsIgnoreCase("Maestria")){
+                cantMaestria++;
+            }
+            if(f.getNivelEscolar().equalsIgnoreCase("Doctorado")){
+                cantDoctorado++;
+            }
+        }
+        list.add(cantBasico);
+        list.add(cantMedio);
+        list.add(cantGrado);
+        list.add(cantMaestria);
+        list.add(cantDoctorado);
 
+        return list;
+    }
 
 }
