@@ -227,8 +227,9 @@ function imprimirTabla(lista_formulario) {
         fila+=  "<td>"+lista_formulario[key].sector+"</td>"
         fila+=  "<td>"+lista_formulario[key].nivelEscolar+"</td>"
         fila+= "<td>"
-        fila+=  "<a id='editar' href='#editFromModal' class='edit' data-toggle='modal'>"+ "<i class='material-icons' data-toggle='tooltip' title='Edit'>"+"&#xE254;"+"</i>" +"</a>"
-        fila+= 	"<a id='borrar' href='#deleteFroModal' class='delete' data-toggle='modal'>"+"<i class='material-icons' data-toggle='tooltip' title='Delete'>"+"&#xE872;"+"</i>"+"</a>"
+        fila+=  "<a id='editar' href='#editFromModal' class='edit' data-toggle='modal'>"+ "<i class='fas fa-edit' data-toggle='tooltip' title='Editar'>"+"</i>" +"</a>"
+        fila+=  "<div type='hidden'>"+ "<div>"
+        fila+= 	"<a id='borrar' href='#deleteFroModal' class='delete' data-toggle='modal'>"+"<i class='fas fa-trash' data-toggle='tooltip' title='Eliminar'>"+"</i>"+"</a>"
         fila+= "</td>"
         fila+=  "</tr>"
 
