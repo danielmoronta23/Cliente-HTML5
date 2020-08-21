@@ -35,6 +35,13 @@ dependencies {
     //JSON
     compile "com.fasterxml.jackson.core:jackson-databind:2.10.1"
     compile group: 'org.json', name: 'json', version: '20200518'
+    //Libreria para SOAP de Jetty https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-http-spi
+    compile group: 'org.eclipse.jetty', name: 'jetty-http-spi', version: '9.4.30.v20200611'
+    //incluyendo las librerias de javax.ee en java 11.
+    //https://blog.codefx.org/java/java-11-migration-guide/
+    compile "org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438"
+    compile "com.sun.xml.ws:jaxws-rt:2.3.1"
+    compile "com.sun.xml.ws:rt:2.3.1"
 }
 
 //Agregando UTF 8 para las plantillas.

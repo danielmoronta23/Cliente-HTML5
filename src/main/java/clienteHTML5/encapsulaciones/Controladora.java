@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 public class Controladora {
-    private static Controladora controladora = null;
+    private static Controladora controladora;
     private final ServicioUsuario servicioUsuario = new ServicioUsuario();
     private final ServicioFormulario servicioFormulario = new ServicioFormulario();
 
-    public Controladora() {
-
+    private Controladora() {
+        crearDatosPorDefecto();
     }
     public  static Controladora getInstance() {
         if (controladora == null) {
@@ -25,7 +25,7 @@ public class Controladora {
         return controladora;
     }
 
-    //------------------------------Metodos para crear Usuarios y autentificar.------------------------------
+    //------------------------------Metodos para crear Usuarios y autentificar.-----------
     public boolean agregarUsuario(Usuario usuario){
         return servicioUsuario.crear(usuario);
     }
@@ -46,7 +46,7 @@ public class Controladora {
         return servicioUsuario.explorarTodo();
     }
 
-    // ------------------------------CRUD FORMULARIO ------------------------------
+    // ------------------------------CRUD FORMULARIO ------------------------------------
     public boolean agregarRegistro(Formulario formulario){
       return servicioFormulario.crear(formulario);
     }
@@ -62,6 +62,9 @@ public class Controladora {
     }
     public List<Formulario> getServicioFormulario() {
         return servicioFormulario.explorarTodo();
+    }
+    public Formulario buscarFormulario(String id){
+        return servicioFormulario.buscar(id);
     }
 
     //------------------------------Creando Datos por defecto------------------------------
