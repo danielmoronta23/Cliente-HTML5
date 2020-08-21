@@ -1,6 +1,7 @@
 package clienteHTML5;
 
 import clienteHTML5.Visual.ControladorPlantilla;
+import clienteHTML5.api.ApiReset;
 import clienteHTML5.controlador.ControladorWebSocket;
 import clienteHTML5.encapsulaciones.Controladora;
 import clienteHTML5.servicios.ConexionDB;
@@ -26,5 +27,6 @@ public class Main {
 
         new ControladorPlantilla().rutas(app);
         new ControladorWebSocket(app).aplicarRutas();
+        new ApiReset(app).aplicarRutas();
     }
 }
