@@ -2,6 +2,7 @@ package clienteHTML5.encapsulaciones;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -21,7 +22,8 @@ public class Formulario implements Serializable {
     private Usuario usuario;
     @Embedded
     private Ubicacion ubicacion;
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    List<Foto> fotoList;
     public Formulario() {
     }
     public Formulario(String nombre, String sector, String nivelEscolar, Usuario usuario, Ubicacion ubicacion) {
@@ -31,7 +33,13 @@ public class Formulario implements Serializable {
         this.usuario = usuario;
         this.ubicacion = ubicacion;
     }
-
+    public Formulario(String nombre, String sector, String nivelEscolar, Usuario usuario, Ubicacion ubicacion, List<Foto> listFoto) {
+        this.nombre = nombre;
+        Sector = sector;
+        NivelEscolar = nivelEscolar;
+        this.usuario = usuario;
+        this.ubicacion = ubicacion;
+    }
     public String getId() {
         return id;
     }
@@ -79,4 +87,5 @@ public class Formulario implements Serializable {
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
+
 }
