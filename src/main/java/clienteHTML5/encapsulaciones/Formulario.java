@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-
 @Entity
 @Table(name = "Formulario")
 public class Formulario implements Serializable {
@@ -22,8 +21,8 @@ public class Formulario implements Serializable {
     private Usuario usuario;
     @Embedded
     private Ubicacion ubicacion;
-    @ElementCollection(fetch = FetchType.EAGER)
-    List<Foto> fotoList;
+    @Embedded
+    private Foto foto;
     public Formulario() {
     }
     public Formulario(String nombre, String sector, String nivelEscolar, Usuario usuario, Ubicacion ubicacion) {
@@ -33,12 +32,13 @@ public class Formulario implements Serializable {
         this.usuario = usuario;
         this.ubicacion = ubicacion;
     }
-    public Formulario(String nombre, String sector, String nivelEscolar, Usuario usuario, Ubicacion ubicacion, List<Foto> listFoto) {
+    public Formulario(String nombre, String sector, String nivelEscolar, Usuario usuario, Ubicacion ubicacion, Foto Foto) {
         this.nombre = nombre;
         Sector = sector;
         NivelEscolar = nivelEscolar;
         this.usuario = usuario;
         this.ubicacion = ubicacion;
+        this.foto = foto;
     }
     public String getId() {
         return id;
@@ -88,4 +88,11 @@ public class Formulario implements Serializable {
         this.ubicacion = ubicacion;
     }
 
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
 }

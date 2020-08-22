@@ -29,6 +29,10 @@ public class ApiReset extends ControladorBase {
                     get("/listar", ctx -> {
                         ctx.json(controladora.getServicioFormulario());
                     });
+                    //Listar por usuario.
+                    get("/listar-por-usuario:usuario", ctx -> {
+                        ctx.json(controladora.getFormularioPorUsuario(ctx.pathParam("usuario", String.class).get()));
+                    });
                     //Agregar
                     post("/agregar", ctx -> {
                         //Parseando la informacion del POJO. El forma debe estar en JSON
@@ -46,6 +50,5 @@ public class ApiReset extends ControladorBase {
                 });
             });
         });
-
     }
 }

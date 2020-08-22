@@ -3,7 +3,9 @@ package clienteHTML5.encapsulaciones;
 import clienteHTML5.servicios.ServicioFormulario;
 import clienteHTML5.servicios.ServicioUsuario;
 import clienteHTML5.util.Roles;
+import javassist.expr.NewArray;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -74,5 +76,14 @@ public class Controladora {
             //Asignar un rol
             servicioUsuario.crear(new Usuario("admin", "admin", "1234", Set.of(Roles.ROLE_ADMIN)));
         }
+    }
+    public List<Formulario> getFormularioPorUsuario(String usario){
+        List<Formulario> formularioUsuario =new ArrayList<Formulario>();
+        for (Formulario f:getServicioFormulario()) {
+            if(f.getUsuario().getUsuario().equals(usario)){
+                formularioUsuario.add(f);
+            }
+        }
+        return formularioUsuario;
     }
 }

@@ -1,10 +1,11 @@
-package soap;
+package clienteHTML5.soap;
 
 import clienteHTML5.encapsulaciones.Controladora;
 import clienteHTML5.encapsulaciones.Formulario;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,8 @@ public class FormularioWebServices {
     public Formulario buscarFormulario(String id){
         return buscarFormulario(id);
     }
-
-
+    @WebMethod
+    public List<Formulario> getFormularioPorUsuario(String usario){
+        return controladora.getFormularioPorUsuario(usario);
+    }
 }
