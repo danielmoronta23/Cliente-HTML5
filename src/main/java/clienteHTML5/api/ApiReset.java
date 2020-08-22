@@ -2,6 +2,7 @@ package clienteHTML5.api;
 
 import clienteHTML5.encapsulaciones.Controladora;
 import clienteHTML5.encapsulaciones.Formulario;
+import clienteHTML5.encapsulaciones.FormularioIndexDB;
 import clienteHTML5.util.ControladorBase;
 import io.javalin.Javalin;
 
@@ -12,6 +13,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
  */
 public class ApiReset extends ControladorBase {
     private Controladora controladora = Controladora.getInstance();
+    private FormularioIndexDB formularioIndexDB;
 
     public ApiReset(Javalin app) {
         super(app);
@@ -36,19 +38,20 @@ public class ApiReset extends ControladorBase {
                     //Agregar
                     post("/agregar", ctx -> {
                         //Parseando la informacion del POJO. El forma debe estar en JSON
-                        Formulario formulario = ctx.bodyAsClass(Formulario.class);
-                        ctx.json(controladora.agregarRegistro(formulario));
+                        FormularioIndexDB f = ctx.bodyAsClass(FormularioIndexDB.class);
+                        ctx.json(formularioIndexDB.agregarFormulariosDB(f));
                     });
                     //Borrar
                     delete("/borrar:id", ctx -> {
                         ctx.json(controladora.borroarRegistro(ctx.pathParam("id", String.class).get()));
                     });
                     put("/actualizar", ctx -> {
-                        Formulario formulario = ctx.bodyAsClass(Formulario.class);
-                        ctx.json(controladora.actualizarRegistro(formulario));
+                        FormularioIndexDB f = ctx.bodyAsClass(FormularioIndexDB.class);
+                        ctx.json(formularioIndexDB.actualizarFormulariosDB(f));
                     });
                 });
             });
         });
     }
+
 }

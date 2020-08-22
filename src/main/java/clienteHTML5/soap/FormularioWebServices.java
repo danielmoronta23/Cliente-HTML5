@@ -2,6 +2,7 @@ package clienteHTML5.soap;
 
 import clienteHTML5.encapsulaciones.Controladora;
 import clienteHTML5.encapsulaciones.Formulario;
+import clienteHTML5.encapsulaciones.FormularioIndexDB;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -25,16 +26,18 @@ public class FormularioWebServices {
         return controladora.getServicioFormulario();
     }
     @WebMethod
-    public boolean agregarRegistro(Formulario formulario){
-        return controladora.agregarRegistro(formulario);
+    public boolean agregarRegistro(FormularioIndexDB formulario){
+        FormularioIndexDB f = null;
+        return f.agregarFormulariosDB(formulario);
     }
     @WebMethod
     public boolean borroarRegistro(String id){
         return controladora.borroarRegistro(id);
     }
     @WebMethod
-    public boolean actualizarRegistro(Formulario formularioActualizado){
-       return controladora.actualizarRegistro(formularioActualizado);
+    public boolean actualizarRegistro(FormularioIndexDB formularioActualizado){
+        FormularioIndexDB f = null;
+       return f.actualizarFormulariosDB(f);
     }
     @WebMethod
     public Formulario buscarFormulario(String id){
