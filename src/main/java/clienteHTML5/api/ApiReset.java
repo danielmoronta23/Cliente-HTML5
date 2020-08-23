@@ -33,8 +33,19 @@ public class ApiReset extends ControladorBase {
                         ctx.json(controladora.getServicioFormulario());
                     });
                     //Listar por usuario.
-                    get("/listar-por-usuario:usuario", ctx -> {
+                    get("/listar-por-nombre/:usuario", ctx -> {
+                        System.out.println( "Parametro recibido: " + ctx.pathParam("usuario"));
                         ctx.json(controladora.getFormularioPorUsuario(ctx.pathParam("usuario", String.class).get()));
+                    });
+                    //Autenticar Usuario
+                    get("/:autenticar", ctx -> {
+                        System.out.println( "Parametro recibido: " + ctx.pathParam("autenticar"));
+                        if(controladora.buscarUsuario(ctx.pathParam("autenticar", String.class).get()) != null){
+                            ctx.json("true");
+                        }else{
+                            ctx.json("false");
+                        }
+
                     });
                     //Agregar
                     post("/agregar", ctx -> {
