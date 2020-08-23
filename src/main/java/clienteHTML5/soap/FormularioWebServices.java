@@ -3,6 +3,7 @@ package clienteHTML5.soap;
 import clienteHTML5.encapsulaciones.Controladora;
 import clienteHTML5.encapsulaciones.Formulario;
 import clienteHTML5.encapsulaciones.FormularioIndexDB;
+import clienteHTML5.encapsulaciones.Usuario;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -22,14 +23,24 @@ public class FormularioWebServices {
         return "Hello World: "+hola;
     }
     @WebMethod
+    public boolean autenticarUsuario(String user, String password){
+        Usuario usuario = controladora.buscarUsuario(user);
+        Boolean toke = false;
+        if(usuario != null) {
+            if (usuario.getPassword().matches(password)) {
+                toke = true;
+            }
+        }
+        return toke;
+    }
+    @WebMethod
     public List<Formulario> getFormulario(){
         return controladora.getServicioFormulario();
     }
     @WebMethod
     public boolean agregarRegistro(FormularioIndexDB formulario){
-        FormularioIndexDB f = null;
 
-        if(f.agregarFormulariosDB(formulario) != null){
+        if(formulario.agregarFormulariosDB(formulario) != null){
             return true;
         }
         return false;
