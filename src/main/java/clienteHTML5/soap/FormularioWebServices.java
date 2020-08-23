@@ -28,7 +28,11 @@ public class FormularioWebServices {
     @WebMethod
     public boolean agregarRegistro(FormularioIndexDB formulario){
         FormularioIndexDB f = null;
-        return f.agregarFormulariosDB(formulario);
+
+        if(f.agregarFormulariosDB(formulario) != null){
+            return true;
+        }
+        return false;
     }
     @WebMethod
     public boolean borroarRegistro(String id){

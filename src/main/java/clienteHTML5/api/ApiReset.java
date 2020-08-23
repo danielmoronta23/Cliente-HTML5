@@ -3,6 +3,7 @@ package clienteHTML5.api;
 import clienteHTML5.encapsulaciones.Controladora;
 import clienteHTML5.encapsulaciones.Formulario;
 import clienteHTML5.encapsulaciones.FormularioIndexDB;
+import clienteHTML5.encapsulaciones.Foto;
 import clienteHTML5.util.ControladorBase;
 import io.javalin.Javalin;
 
@@ -39,7 +40,7 @@ public class ApiReset extends ControladorBase {
                     post("/agregar", ctx -> {
                         //Parseando la informacion del POJO. El forma debe estar en JSON
                         FormularioIndexDB f = ctx.bodyAsClass(FormularioIndexDB.class);
-                        ctx.json(formularioIndexDB.agregarFormulariosDB(f));
+                        ctx.json(f.agregarFormulariosDB(f));
                     });
                     //Borrar
                     delete("/borrar:id", ctx -> {

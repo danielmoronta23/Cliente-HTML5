@@ -1,5 +1,7 @@
 package clienteHTML5.encapsulaciones;
 
+import clienteHTML5.servicios.ServicioUsuario;
+
 import java.util.List;
 
 public class FormularioIndexDB {
@@ -35,6 +37,14 @@ public class FormularioIndexDB {
         this.foto = foto;
     }
 
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public Foto setFoto(Foto foto) {
+        this.foto = foto;
+        return foto;
+    }
 
     public String getNombre() {
         return nombre;
@@ -104,15 +114,23 @@ public class FormularioIndexDB {
         }
         return  formularioIndexDB.size();
     }
-    public boolean agregarFormulariosDB(FormularioIndexDB f){
+    public Formulario agregarFormulariosDB(FormularioIndexDB f){
         Formulario aux = null;
         Usuario auxUsuario = null;
+        System.out.println("Entro!!!!!!!!!!!");
         if(f!=null){
             auxUsuario = Controladora.getInstance().buscarUsuario(f.getUsuario());
-            aux = new Formulario(f.getNombre(),f.getSector(),f.getNivelEscolar(), auxUsuario, new Ubicacion(f.getLongitud(),f.getLatitud()));
-           return Controladora.getControladora().agregarRegistro(aux);
+            if(auxUsuario != null) {
+                aux = new Formulario(f.getNombre(),f.getSector(),f.getNivelEscolar(), auxUsuario,
+                        new Ubicacion(f.getLongitud(),f.getLatitud()),
+                        new Foto(f.foto.getNombre(),f.foto.getMimeType(), f.foto.getFotoBase64()));
+                System.out.println("Se creo el form!!");
+                Controladora.getControladora().agregarRegistro(aux);
+                return new Formulario();
+            }
+
         }
-        return false;
+        return null;
     }
     public boolean actualizarFormulariosDB(FormularioIndexDB f){
         Formulario aux = null;

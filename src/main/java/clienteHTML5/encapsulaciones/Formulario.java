@@ -11,7 +11,7 @@ public class Formulario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    @Column(name = "nombre")
+    @Column(name = "nombref")
     private String nombre;
     @Column(name = "Sector")
     private String Sector;
