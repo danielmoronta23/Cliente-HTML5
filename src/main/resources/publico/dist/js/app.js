@@ -7,7 +7,6 @@ const snapSoundElement = document.getElementById('snapSound');
 
 const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
 
-let picture
 
 $("#webcam-switch").change(function () {
     if(this.checked){
@@ -73,12 +72,7 @@ function cameraStopped(){
 }
 
 
-$("#take-photo").click(function () {
-    beforeTakePhoto();
-    picture = webcam.snap();
-    $("#foto").val(picture);
-    afterTakePhoto();
-});
+
 
 function beforeTakePhoto(){
     $('.flash')

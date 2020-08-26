@@ -33,10 +33,14 @@ dataBase.onerror = function (e) {
     console.error('Error en el proceso: '+e.target.errorCode);
 };
 
+
 //---------------------------GEOLOGIZACIÓN--------------------------------
 //Obteniendo GEOLOCALIZACIÓN
 var lati="";
 var longi="";
+let Thepicture="NONE";
+
+
 function GEOPosicion() {
     function success(pos) {
         var crd = pos.coords;
@@ -79,7 +83,7 @@ function agregarFormulario() {
             document.querySelector("#nombreF").value = '';
             /* alert('Formulario agregado correctamente!'); */
             listarDatos();
-            window.location.reload();
+            ///window.location.reload();
 
         };
 
@@ -98,7 +102,12 @@ function agregarFormulario() {
             latitud: lati,
             longitud: longi,
             usuario: document.querySelector("#idUsuario").value,
-            foto: document.querySelector("#foto").value
+            foto: {
+                nombre: "foto1",
+                mimeType: "image/png",
+                fotoBase64: document.querySelector("#foto").value
+
+            }
         });
 
         request.onerror = function (e) {
@@ -246,6 +255,19 @@ function imprimirTabla(lista_formulario) {
 
 }
 
+///--------------------------------------- Guardar Foto -----------------------------------------
+
+$("#take-photo").click(function () {
+    beforeTakePhoto();
+    Thepicture = webcam.snap();
+    var data = Thepicture.toString().split(",")
+    ///---data[0] Metadata & data[1] = Base64 of Picture
+    $("#foto").val(data[1]);
+    afterTakePhoto();
+
+});
+
+
 
 //--------------------------------Conexion con el servidor (Envios/recesión de datos)--------------------------------
 //abriendo el objeto para el websocket
@@ -268,7 +290,7 @@ function recibirInfServidor(mensaje){
     $("#mensajeServidor").append(mensaje.data);
 }
 function conectar() {
-    webSocket = new WebSocket("wss://" + location.hostname + ":" + location.port + "/conectarServidor");
+    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/conectarServidor");
 
     webSocket.onmessage = function(data){recibirInformacionServidor(data);};
     webSocket.onopen  = function(e){ console.log("Conectado - status "+this.readyState); };

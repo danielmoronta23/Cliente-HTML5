@@ -36,6 +36,7 @@ public class ControladorWebSocket extends ControladorBase {
             });
             ws.onMessage(ctx -> {
                 ObjectMapper objectMapper = new ObjectMapper();
+                System.out.println("Recibiendo Mesaje por WS...");
                 List<FormularioIndexDB> formularios = objectMapper.readValue(ctx.message(), new TypeReference<List<FormularioIndexDB>>() {});
                 //Enviar formularios a la BD H2
                 //Controladora.getInstance().agregarRegistro(formularios);
