@@ -53,13 +53,16 @@ function agregarFormulario() {
     var name="";
     var sector="";
     var nivel="";
+    var foto="";
 
     name=$("#nombreF").val();
     sector=$("#sector").val();
     nivel=$("#nivelEscolar").val()
     console.log("Nivel Escolar", nivel);
+    foto=$("#foto").val();
+    console.log(" foto tomada: ", foto);
     //validando campos..
-    if(name!="" && sector!="" && nivel!="Nivel Academico") {
+    if(name!="" && sector!="" && nivel!="Nivel Academico" && foto!="") {
 
         var dbActiva = dataBase.result; //Nos retorna una referencia al IDBDatabase.
 
@@ -74,8 +77,10 @@ function agregarFormulario() {
 
         transaccion.oncomplete = function (e) {
             document.querySelector("#nombreF").value = '';
-            alert('Formulario agregado correctamente!');
+            /* alert('Formulario agregado correctamente!'); */
             listarDatos();
+            window.location.reload();
+
         };
 
         //Abriendo la colección de datos que estaremos usando.
@@ -92,7 +97,8 @@ function agregarFormulario() {
             nivelEscolar: document.querySelector("#nivelEscolar").value,
             latitud: lati,
             longitud: longi,
-            usuario: document.querySelector("#idUsuario").value
+            usuario: document.querySelector("#idUsuario").value,
+            foto: document.querySelector("#foto").value
         });
 
         request.onerror = function (e) {
@@ -107,6 +113,7 @@ function agregarFormulario() {
             document.querySelector("#nombreF").value = "";
             document.querySelector("#sector").value = "";
             document.querySelector("#nivelEscolar").value = "Nivel Academico";
+            document.querySelector("#foto").value = "";
         };
 
     }
@@ -236,6 +243,7 @@ function imprimirTabla(lista_formulario) {
     }
     document.getElementById("listaFormulario").innerHTML=fila;
 
+
 }
 
 
@@ -279,7 +287,6 @@ function enviarDatoServidor(){
         alert("Formularios enviado de forma exitosa!")
         limpiarDB();
         listarDatos();
-        actualizarbtn()
     };
 
 

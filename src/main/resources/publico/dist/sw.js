@@ -17,7 +17,12 @@ let urls_to_cache = [
     '/css/styles.css',
     '/scripts/indexdDB.js',
     '/scripts/offline.js',
-    '/sw.js'
+    '/sw.js',
+    '/css/webcam-demo.css',
+    '/js/app.js',
+    '/js/webcamEasy.js',
+    '/js/webpack.config.js',
+    '/camera_flip_white.png'
 ]
 self.addEventListener('install', (e) => {
     e.waitUntil(caches.open(cache_name).then((cache) => {
