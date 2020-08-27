@@ -26,13 +26,13 @@ import static io.javalin.apibuilder.ApiBuilder.*;
  * https://github.com/vacax/sparkjava_jwt/blob/master/src/main/java/edu/pucmm/sjjwt/Main.java
  */
 
-public class ApiReset extends ControladorBase {
+public class ApiRest extends ControladorBase {
     public final static String keySecret = "asd12D1234dfr123@#4Fsdcasdd5g78a";
 
     private Controladora controladora = Controladora.getInstance();
     private FormularioIndexDB formularioIndexDB;
 
-    public ApiReset(Javalin app) {
+    public ApiRest(Javalin app) {
         super(app);
     }
 
@@ -40,20 +40,20 @@ public class ApiReset extends ControladorBase {
     public void aplicarRutas() {
         filtro_Cors();
         app.routes(()->{
-            path("api-Reset", () ->{
+            path("api-Rest", () ->{
                 //Autenticar Usuario
                 get("/:autenticar", ctx -> {
+                    RepuestaLogin repuestaLogin = null;
                     System.out.println( "Parametro recibido: " + ctx.pathParam("autenticar"));
                     Usuario usuario = null;
                     usuario = controladora.buscarUsuario(ctx.pathParam("autenticar", String.class).get());
                     if(usuario!= null){
-                        RepuestaLogin repuestaLogin = generarJWT(usuario);
+                       repuestaLogin = generarJWT(usuario);
                         System.out.println("Enviando repuesta el cliente...");
                         System.out.println("toke -> "+repuestaLogin.getToken());
                         ctx.json(repuestaLogin);
-                       // ctx.json("true");
                     }else{
-                        ctx.json("false");
+                        ctx.json(repuestaLogin);
                     }
                 });
                 path("/formulario",()->{
@@ -67,7 +67,7 @@ public class ApiReset extends ControladorBase {
 
                         //  Verificando si existe el header de autorizacion.
                         String headerAutentificacion = ctx.header(header);
-                        if(headerAutentificacion == null || !headerAutentificacion.startsWith(prefijo)){
+                        if(headerAutentificacion == null){
                             throw new ForbiddenResponse("No tiene permiso para acceder al recuerso solicitado! :(");
                         }else{
                             //  Recuperando el token y validando
