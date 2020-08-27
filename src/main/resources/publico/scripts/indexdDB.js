@@ -104,7 +104,7 @@ function agregarFormulario() {
             usuario: document.querySelector("#idUsuario").value,
             foto: {
                 nombre: "foto1",
-                mimeType: "image/png",
+                mimeType: "image/jpeg",
                 fotoBase64: document.querySelector("#foto").value
 
             }
